@@ -11,7 +11,7 @@ import {
 import { styled } from "@mui/material/styles";
 import { NavLink } from "react-router-dom";
 
-import { Home, LayoutList, PanelLeftOpen, PanelLeftClose } from "lucide-react";
+import { Home, LayoutList, PanelLeftOpen, PanelLeftClose, Music } from "lucide-react";
 
 import type { ListItemButtonProps } from "@mui/material/ListItemButton";
 
@@ -55,6 +55,7 @@ const StyledListItemButton = styled(ListItemButton, {
 const NAV_ITEMS = [
   { text: "Home", icon: <Home size={18} />, path: "/" },
   { text: "Dashboard", icon: <LayoutList size={18} />, path: "/dashboard" },
+  { text: "Audio Library", icon: <Music size={18} />, path: "/audio-library" },
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({
