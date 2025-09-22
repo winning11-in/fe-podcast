@@ -3,9 +3,9 @@ import "./styles/layout.css";
  import Sidebar from "./components/Layout/Sidebar";
 import { CssBaseline, useTheme } from "@mui/material";
  import { Routes, Route } from "react-router-dom";
-import Home from "./components/Home";
-import Dashboard from "./components/Dashboard";
+ import Dashboard from "./components/Dashboard";
 import { useState } from "react";
+import Home from "./components/Home";
 
 function App() {
   const theme = useTheme();
