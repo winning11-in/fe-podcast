@@ -1,47 +1,79 @@
 
-import { useState } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
-import { Button, AppBar, Toolbar, Typography, Container } from '@mui/material';
-import './App.css';
-
-function Home() {
-  const [count, setCount] = useState(0);
-  return (
-    <Container>
-      <Typography variant="h4" gutterBottom>Vite + React + MUI + Router</Typography>
-      <Button variant="contained" onClick={() => setCount((c) => c + 1)}>
-        Count is {count}
-      </Button>
-      <Typography sx={{ mt: 2 }}>
-        Edit <code>src/App.tsx</code> and save to test HMR
-      </Typography>
-    </Container>
-  );
-}
-
-function About() {
-  return (
-    <Container>
-      <Typography variant="h5">About Page</Typography>
-      <Typography>This is a demo of React Router and MUI.</Typography>
-    </Container>
-  );
-}
+import "./styles/layout.css";
+import Header from "./components/Layout/Header";
+import Sidebar from "./components/Layout/Sidebar";
+import { CssBaseline, useTheme } from "@mui/material";
+import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import Dashboard from "./components/Dashboard";
 
 function App() {
+  const theme = useTheme();
+  const [menuVisible] = useState(true); 
+
+   const rootStyle: React.CSSProperties = {
+    backgroundColor: theme.palette.background.default,
+    display: "flex",
+    flexDirection: "column",
+    fontFamily: "'Roboto', sans-serif",
+    minHeight: "100vh",
+    width: "100%",
+  };
+
+  const sidebarStyle: React.CSSProperties = {
+    position: "fixed",
+    left: 0,
+    top: 0,
+    height: "100vh",
+    zIndex: 1200,
+    overflowY: "auto" as const,
+    width: menuVisible ? "240px" : "64px",
+    transition: "width 0.3s ease",
+  };
+
+  const mainAreaStyle: React.CSSProperties = {
+    flexGrow: 1,
+    display: "flex",
+    flexDirection: "column",
+    marginLeft: menuVisible ? "240px" : "64px",
+    transition: "margin-left 0.3s ease",
+  };
+
+  const headerWrapperStyle: React.CSSProperties = {
+    position: "sticky" as const,
+    top: 0,
+    zIndex: 1100,
+    width: "100%",
+    backgroundColor: theme.palette.background.paper,
+  };
+
+  const contentStyle: React.CSSProperties = {
+    flexGrow: 1,
+    padding: "24px",
+    overflowX: "hidden" as const,
+    backgroundColor: theme.palette.background.default,
+  };
+
   return (
     <>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>FE Podcast</Typography>
-          <Button color="inherit" component={Link} to="/">Home</Button>
-          <Button color="inherit" component={Link} to="/about">About</Button>
-        </Toolbar>
-      </AppBar>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
+      <CssBaseline />
+      <div style={rootStyle}>
+        <div style={sidebarStyle}>
+          <Sidebar />
+        </div>
+        <div style={mainAreaStyle}>
+          <div style={headerWrapperStyle}>
+            <Header />
+          </div>
+          <main style={contentStyle}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Routes>
+          </main>
+        </div>
+      </div>
     </>
   );
 }
