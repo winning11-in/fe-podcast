@@ -1,18 +1,17 @@
 
 import "./styles/layout.css";
-import Header from "./components/Layout/Header";
-import Sidebar from "./components/Layout/Sidebar";
+ import Sidebar from "./components/Layout/Sidebar";
 import { CssBaseline, useTheme } from "@mui/material";
-import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+ import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
+import { useState } from "react";
 
 function App() {
   const theme = useTheme();
-  const [menuVisible] = useState(true); 
+   const [collapsed, setCollapsed] = useState(false);
 
-   const rootStyle: React.CSSProperties = {
+  const rootStyle: React.CSSProperties = {
     backgroundColor: theme.palette.background.default,
     display: "flex",
     flexDirection: "column",
@@ -21,57 +20,57 @@ function App() {
     width: "100%",
   };
 
-  const sidebarStyle: React.CSSProperties = {
-    position: "fixed",
-    left: 0,
-    top: 0,
-    height: "100vh",
-    zIndex: 1200,
-    overflowY: "auto" as const,
-    width: menuVisible ? "240px" : "64px",
-    transition: "width 0.3s ease",
+  const bodyStyle: React.CSSProperties = {
+    display: "flex",
+    flex: 1,
+    minHeight: 0, 
+  };
+
+  const sidebarWrapperStyle: React.CSSProperties = {
+    width: collapsed ? 64 : 240,
+    transition: "width 0.25s ease",
+    flex: "0 0 auto",
+    overflow: "hidden",
   };
 
   const mainAreaStyle: React.CSSProperties = {
-    flexGrow: 1,
+    flex: 1,
     display: "flex",
     flexDirection: "column",
-    marginLeft: menuVisible ? "240px" : "64px",
-    transition: "margin-left 0.3s ease",
+    minHeight: 0,
   };
 
-  const headerWrapperStyle: React.CSSProperties = {
-    position: "sticky" as const,
-    top: 0,
-    zIndex: 1100,
-    width: "100%",
-    backgroundColor: theme.palette.background.paper,
-  };
+ 
 
   const contentStyle: React.CSSProperties = {
     flexGrow: 1,
     padding: "24px",
     overflowX: "hidden" as const,
     backgroundColor: theme.palette.background.default,
+    overflowY: "auto",
   };
 
   return (
     <>
       <CssBaseline />
       <div style={rootStyle}>
-        <div style={sidebarStyle}>
-          <Sidebar />
-        </div>
-        <div style={mainAreaStyle}>
-          <div style={headerWrapperStyle}>
-            <Header />
+        {/* <div style={headerWrapperStyle}>
+          <Header />
+        </div> */}
+
+        <div style={bodyStyle}>
+          <div style={sidebarWrapperStyle}>
+            <Sidebar collapsed={collapsed} setCollapsed={setCollapsed}/>
           </div>
-          <main style={contentStyle}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Routes>
-          </main>
+
+          <div style={mainAreaStyle}>
+            <main style={contentStyle}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+              </Routes>
+            </main>
+          </div>
         </div>
       </div>
     </>
