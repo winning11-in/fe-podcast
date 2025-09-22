@@ -9,12 +9,13 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Toolbar from "@mui/material/Toolbar";
 
 import HomeIcon from "@mui/icons-material/Home";
 import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import { NavLink } from "react-router-dom";
 import { styled } from "@mui/material/styles";
+import { Box, Typography } from "@mui/material";
+
 const StyledNavLink = styled(NavLink)(() => ({
   textDecoration: "none",
   width: "100%",
@@ -30,13 +31,13 @@ const StyledListItemButton = styled(ListItemButton, {
   borderRadius: "10px",
   transition: "background 0.2s, color 0.2s",
   background: $active ? "#fff" : "inherit",
-  color: $active ? "#222" : "#fff",
+  color: $active ? "#3733b3" : "#fff",
   "&:hover": {
     background: $active ? "#fff" : "#3733b3",
-    color: $active ? "#222" : "#fff",
+    color: $active ? "#3733b3" : "#fff",
   },
   "& .MuiListItemIcon-root": {
-    color: $active ? "#222" : "#fff",
+    color: $active ? "#3733b3" : "#fff",
     transition: "color 0.2s",
   },
 }));
@@ -63,9 +64,16 @@ export default function Sidebar() {
         },
       }}
     >
-      <Toolbar />
+      <Box>
+        <Typography
+          variant="h5"
+          sx={{ my: 2, textAlign: "center", color: "#fff" }}
+        >
+         Audio Podcasts
+        </Typography>
+      </Box>
 
-      <List>
+      <List sx={{ mt: 4 }}>
         {navItems.map(({ text, icon, path }) => (
           <ListItem key={text} disablePadding>
             <StyledNavLink to={path} end={path === "/"}>
