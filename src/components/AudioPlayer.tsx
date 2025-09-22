@@ -34,7 +34,7 @@ const AudioPlayer: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(1);
+  const [volume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -151,15 +151,14 @@ const AudioPlayer: React.FC = () => {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const vol = parseFloat(e.target.value);
-    setVolume(vol);
-    if (audioRef.current) {
-      audioRef.current.volume = vol;
-    }
-    setIsMuted(vol === 0);
-  };
+//   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     const vol = parseFloat(e.target.value);
+//     setVolume(vol);
+//     if (audioRef.current) {
+//       audioRef.current.volume = vol;
+//     }
+//     setIsMuted(vol === 0);
+//   };
 
   const toggleMute = () => {
     if (audioRef.current) {
