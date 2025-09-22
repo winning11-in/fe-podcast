@@ -15,8 +15,8 @@ import { INTERNET_AUDIO, WEB_DEVELOPMENT } from "../utils/Audio";
 
 const cardData = [
   {
-    tag: "Frontend",
-    image: "/assets/hook.png",
+    tag: "Tech History",
+    image: "/assets/Internet.png",
     audio: INTERNET_AUDIO,
     title: "Introduction to Internet",
     author: "DPK",
@@ -24,8 +24,8 @@ const cardData = [
     plays: "12.4K",
   },
   {
-    tag: "DevOps",
-    image: "/assets/cloud.png",
+    tag: "Web Development",
+    image: "/assets/web-d.png",
     audio: WEB_DEVELOPMENT,
     title: "Web Development Essentials",
     author: "AJ",
