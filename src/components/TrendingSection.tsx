@@ -11,24 +11,24 @@ import {
 import { styled } from "@mui/material/styles";
 import { Clock, Flame, Play, Pause } from "lucide-react";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { INTERNET_AUDIO, WEB_DEVELOPMENT } from "../utils/Audio";
 
 const cardData = [
   {
     tag: "Frontend",
     image: "/assets/hook.png",
-    // add an audio path (place your mp3 files under public/assets)
-    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    title: "React Hooks Deep Dive",
-    author: "Alex Rodriguez",
+    audio: INTERNET_AUDIO,
+    title: "Introduction to Internet",
+    author: "DPK",
     time: "38:15",
     plays: "12.4K",
   },
   {
     tag: "DevOps",
     image: "/assets/cloud.png",
-    audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    title: "Cloud Architecture Fundamentals",
-    author: "Michael Thompson",
+    audio: WEB_DEVELOPMENT,
+    title: "Web Development Essentials",
+    author: "AJ",
     time: "52:20",
     plays: "8.9K",
   },
