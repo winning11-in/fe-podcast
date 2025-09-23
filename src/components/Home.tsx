@@ -144,7 +144,7 @@ export default function NeuralNetworksHero() {
       >
         {[
           { value: "500K+", label: "Active Listeners" },
-          { value: "98%", label: "Completion Rate" },
+          { value: "97%", label: "Completion Rate" },
           { value: "10K+", label: "Hours of Content" },
           { value: "200+", label: "Expert Narrators" },
         ].map((stat, i) => (
