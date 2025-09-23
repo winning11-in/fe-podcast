@@ -7,7 +7,9 @@ import Dashboard from "./components/Dashboard";
 import { useState } from "react";
 import Home from "./components/Home";
 import AudioLibrary from "./components/AudioLibrary";
+import VideoLibrary from "./components/VideoLibrary";
 import AudioPlayer from "./components/player/AudioPlayer";
+import VideoPlayer from "./components/player/VideoPlayer";
 import { useThemeContext } from "./hooks/useThemeContext";
 
 function App() {
@@ -17,7 +19,7 @@ function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { isDarkMode } = useThemeContext();
 
-  const isAudioPlayerPage = location.pathname.startsWith("/audio-player");
+  const isPlayerPage = location.pathname.startsWith("/audio-player") || location.pathname.startsWith("/video-player");
 
   const rootStyle: React.CSSProperties = {
     fontFamily: "'Roboto', sans-serif",
@@ -43,18 +45,18 @@ function App() {
         ? "linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)"
         : "linear-gradient(180deg, #4440cc 0%, #3733b3 100%)"
       : "transparent",
-    display: isMobile && !isAudioPlayerPage ? "block" : "none",
+    display: isMobile && !isPlayerPage ? "block" : "none",
   };
 
   const contentContainerStyle: React.CSSProperties = {
     display: "flex",
     flex: 1,
     minHeight: 0,
-    marginTop: isMobile && !isAudioPlayerPage ? "64px" : 0,
+    marginTop: isMobile && !isPlayerPage ? "64px" : 0,
   };
 
   const sidebarWrapperStyle: React.CSSProperties = {
-    width: isAudioPlayerPage ? 0 : isMobile ? 0 : collapsed ? 64 : 240,
+    width: isPlayerPage ? 0 : isMobile ? 0 : collapsed ? 64 : 240,
     transition: "width 0.25s ease",
     flex: "0 0 auto",
     overflow: "hidden",
@@ -69,7 +71,7 @@ function App() {
 
   const contentStyle: React.CSSProperties = {
     flexGrow: 1,
-    padding: isAudioPlayerPage ? "0" : "24px",
+    padding: isPlayerPage ? "0" : "24px",
     overflowX: "hidden" as const,
     overflowY: "auto",
   };
@@ -88,7 +90,7 @@ function App() {
 
         <div style={bodyStyle}>
           <div style={contentContainerStyle}>
-            {!isAudioPlayerPage && (
+            {!isPlayerPage && (
               <div style={sidebarWrapperStyle}>
                 <Sidebar
                   collapsed={collapsed}
@@ -106,7 +108,9 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/audio-library" element={<AudioLibrary />} />
+                  <Route path="/video-library" element={<VideoLibrary />} />
                   <Route path="/audio-player/:id" element={<AudioPlayer />} />
+                  <Route path="/video-player/:id" element={<VideoPlayer />} />
                 </Routes>
               </main>
             </div>

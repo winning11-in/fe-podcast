@@ -18,6 +18,7 @@ import {
   PanelLeftOpen,
   PanelLeftClose,
   Music,
+  Video,
   Sun,
   Moon,
 } from "lucide-react";
@@ -77,6 +78,7 @@ const NAV_ITEMS = [
   { text: "Home", icon: <Home size={18} />, path: "/" },
   // { text: "Dashboard", icon: <LayoutList size={18} />, path: "/dashboard" },
   { text: "Audio Library", icon: <Music size={18} />, path: "/audio-library" },
+  { text: "Video Library", icon: <Video size={18} />, path: "/video-library" },
 ];
 
 const ThemeToggleButton = styled(IconButton, {
