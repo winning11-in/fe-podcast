@@ -1,7 +1,7 @@
 
 import "./styles/layout.css";
  import Sidebar from "./components/Layout/Sidebar";
-import { CssBaseline, useTheme } from "@mui/material";
+import { CssBaseline } from "@mui/material";
  import { Routes, Route, useLocation } from "react-router-dom";
  import Dashboard from "./components/Dashboard";
 import { useState } from "react";
@@ -10,7 +10,6 @@ import AudioLibrary from "./components/AudioLibrary";
 import AudioPlayer from "./components/player/AudioPlayer";
 
 function App() {
-  const theme = useTheme();
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
 
@@ -18,7 +17,6 @@ function App() {
   const isAudioPlayerPage = location.pathname.startsWith('/audio-player');
 
   const rootStyle: React.CSSProperties = {
-    backgroundColor: theme.palette.background.default,
     display: "flex",
     flexDirection: "column",
     fontFamily: "'Roboto', sans-serif",
@@ -50,7 +48,6 @@ function App() {
     flexGrow: 1,
     padding: isAudioPlayerPage ? "0" : "24px",
     overflowX: "hidden" as const,
-    backgroundColor: theme.palette.background.default,
     overflowY: "auto",
   };
 
