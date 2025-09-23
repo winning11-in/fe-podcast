@@ -1,5 +1,5 @@
 import React from "react";
-import { Clock, Heart, DownloadCloud, Grid, List } from "lucide-react";
+import { Clock, Heart, DownloadCloud, Grid, List, Play } from "lucide-react";
 import {
   Box,
   Typography,
@@ -21,6 +21,7 @@ import {
   ThumbnailImage,
   OverlayGradient,
   DurationBadge,
+  PlayButton,
   ActionsRow,
   HeaderRow,
   Controls,
@@ -200,6 +201,9 @@ const VideoLibrary = () => {
               />
               <OverlayGradient />
               <StyledChip label={video.category} color="primary" />
+              <PlayButton aria-label="play video" size="large">
+                <Play size={22} />
+              </PlayButton>
               <DurationBadge>{video.duration}</DurationBadge>
             </VideoContainer>
 

@@ -226,6 +226,7 @@ const AudioLibrary = () => {
                 image={track.thumbnail}
                 alt={track.title}
                 onError={handleImageError}
+                sx={{ filter: 'blur(3px)' }}
               />
               <OverlayGradient />
               <StyledChip label={track.category} color="primary" />

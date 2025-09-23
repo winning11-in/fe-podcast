@@ -3,6 +3,7 @@ import {
   Box,
   Card,
   Chip,
+  IconButton,
   InputBase,
 } from "@mui/material";
 
@@ -57,6 +58,7 @@ export const ThumbnailImage = styled('img')(() => ({
   display: 'block',
   borderTopLeftRadius: 12,
   borderTopRightRadius: 12,
+  filter: 'blur(3px)',
 }));
 
 export const OverlayGradient = styled(Box)(() => ({
@@ -80,6 +82,19 @@ export const DurationBadge = styled(Box)(({ theme }) => ({
   fontSize: "0.72rem",
   zIndex: 5,
   boxShadow: '0 2px 6px rgba(0,229,255,0.3)'
+}));
+
+export const PlayButton = styled(IconButton)(() => ({
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  background: "rgba(0,0,0,0.45)",
+  color: "#fff",
+  zIndex: 3,
+  "&:hover": {
+    background: "rgba(0,0,0,0.55)",
+  },
 }));
 
 export const ActionsRow = styled(Box)(({ theme }) => ({
