@@ -53,22 +53,20 @@ const StyledListItemButton = styled(ListItemButton, {
     paddingLeft: "10px",
     borderRadius: 10,
     transition: "background 0.2s, color 0.2s",
-    background: $active ? ($isDarkMode ? "#333" : "#fff") : "inherit",
-    color: $active ? ($isDarkMode ? "#90caf9" : "#3733b3") : "#fff",
+    background: $active ? ($isDarkMode ? "rgba(0,229,255,0.1)" : "rgba(0,229,255,0.3)") : "inherit",
+    color: $active ? ($isDarkMode ? "#00e5ff" : "#000") : $isDarkMode ? "#fff" : "#000",
 
     "&:hover": {
       background: $active
-        ? $isDarkMode
-          ? "#333"
-          : "#fff"
+        ? ($isDarkMode ? "rgba(0,229,255,0.15)" : "rgba(0,229,255,0.4)")
         : $isDarkMode
-        ? "#333"
-        : "#3733b3",
-      color: $active ? ($isDarkMode ? "#90caf9" : "#3733b3") : "#fff",
+        ? "rgba(255,255,255,0.1)"
+        : "rgba(0,229,255,0.05)",
+      color: $active ? ($isDarkMode ? "#00e5ff" : "#000") : $isDarkMode ? "#fff" : "#000",
     },
 
     "& .MuiListItemIcon-root": {
-      color: $active ? ($isDarkMode ? "#90caf9" : "#3733b3") : "#fff",
+      color: $active ? ($isDarkMode ? "#00e5ff" : "#000") : $isDarkMode ? "#fff" : "#000",
       transition: "color 0.2s",
     },
   })
@@ -89,12 +87,12 @@ const ThemeToggleButton = styled(IconButton, {
     height: $collapsed ? 40 : 48,
     borderRadius: $collapsed ? "50%" : 12,
     background: $isDarkMode
-      ? "rgba(255, 255, 255, 0.1)"
-      : "rgba(255, 255, 255, 0.2)",
+      ? "rgba(0,229,255,0.1)"
+      : "rgba(255, 255, 255, 0.1)",
     border: `1px solid ${
-      $isDarkMode ? "rgba(255, 255, 255, 0.2)" : "rgba(255, 255, 255, 0.3)"
+      $isDarkMode ? "rgba(0,229,255,0.3)" : "rgba(255, 255, 255, 0.2)"
     }`,
-    color: "#fff",
+    color: "#00e5ff",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -113,23 +111,21 @@ const ThemeToggleButton = styled(IconButton, {
       left: 0,
       right: 0,
       bottom: 0,
-      background: $isDarkMode
-        ? "linear-gradient(135deg, rgba(144, 202, 249, 0.1) 0%, rgba(33, 150, 243, 0.1) 100%)"
-        : "linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.2) 100%)",
+      background: "linear-gradient(135deg, rgba(0,229,255,0.1) 0%, rgba(255,152,0,0.1) 100%)",
       opacity: 0,
       transition: "opacity 0.3s ease",
     },
 
     "&:hover": {
       background: $isDarkMode
-        ? "rgba(255, 255, 255, 0.15)"
-        : "rgba(255, 255, 255, 0.3)",
+        ? "rgba(0,229,255,0.2)"
+        : "rgba(255, 255, 255, 0.2)",
       borderColor: $isDarkMode
-        ? "rgba(144, 202, 249, 0.4)"
-        : "rgba(255, 255, 255, 0.5)",
+        ? "rgba(0,229,255,0.5)"
+        : "rgba(255, 255, 255, 0.4)",
       transform: "translateY(-1px)",
       boxShadow: $isDarkMode
-        ? "0 4px 12px rgba(144, 202, 249, 0.2)"
+        ? "0 4px 12px rgba(0,229,255,0.2)"
         : "0 4px 12px rgba(255, 255, 255, 0.1)",
 
       "&::before": {
@@ -158,23 +154,23 @@ const Sidebar: React.FC<SidebarProps> = ({
       variant={isMobile ? "temporary" : "permanent"}
       open={isMobile ? drawerOpen : true}
       onClose={isMobile ? () => setDrawerOpen?.(false) : undefined}
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
+        sx={{
           width: drawerWidth,
-          boxSizing: "border-box",
-          background: isDarkMode
-            ? "linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)"
-            : "linear-gradient(180deg, #4440cc 0%, #3733b3 100%)",
-          color: "#fff",
-          padding: "0px 12px",
-          borderRight: isDarkMode ? "1px solid #333" : "none",
-          boxShadow: isDarkMode
-            ? "2px 0 8px rgba(0,0,0,0.3)"
-            : "2px 0 8px rgba(68, 64, 204, 0.2)",
-        },
-      }}
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            boxSizing: "border-box",
+            background: isDarkMode
+              ? "linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)"
+              : "#f8f9fa",
+            color: isDarkMode ? "#fff" : "#333",
+            padding: "0px 12px",
+            borderRight: isDarkMode ? "1px solid #333" : "1px solid #e0e0e0",
+            boxShadow: isDarkMode
+              ? "2px 0 8px rgba(0,0,0,0.3)"
+              : "2px 0 8px rgba(0,0,0,0.1)",
+          },
+        }}
     >
       <Box
         sx={{
@@ -185,12 +181,21 @@ const Sidebar: React.FC<SidebarProps> = ({
           my: 2,
         }}
       >
-        <Typography variant="h5" sx={{ color: "#fff" }}>
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            background: isDarkMode ? "linear-gradient(90deg,#00e5ff,#ff9800)" : "none",
+            WebkitBackgroundClip: isDarkMode ? "text" : "initial",
+            WebkitTextFillColor: isDarkMode ? "transparent" : "initial",
+            color: isDarkMode ? "transparent" : "#333",
+            fontWeight: "bold"
+          }}
+        >
           {collapsed ? "" : "Podcasts"}
         </Typography>
         <Box
           onClick={() => isMobile ? setDrawerOpen?.(false) : setCollapsed(!collapsed)}
-          sx={{ color: "#fff", cursor: "pointer" }}
+          sx={{ color: isDarkMode ? "#fff" : "#333", cursor: "pointer" }}
         >
           {isMobile ? (
             <PanelLeftClose size={22} />
@@ -253,7 +258,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 sx={{
                   fontSize: "0.875rem",
                   fontWeight: 500,
-                  color: "#fff",
+                  color: "#00e5ff",
                   textShadow: "0 1px 2px rgba(0,0,0,0.1)",
                 }}
               >
