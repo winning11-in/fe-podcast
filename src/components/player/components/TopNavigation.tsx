@@ -1,5 +1,6 @@
-import React from 'react';
-import { ArrowLeft } from 'lucide-react';
+import React from "react";
+import { ArrowLeft } from "lucide-react";
+import { IconButton } from "@mui/material";
 
 interface TopNavigationProps {
   onBack: () => void;
@@ -8,9 +9,9 @@ interface TopNavigationProps {
 export const TopNavigation: React.FC<TopNavigationProps> = ({ onBack }) => {
   return (
     <div className="top-navigation">
-      <button onClick={onBack} className="back-btn" aria-label="Go back">
-        <ArrowLeft size={22} strokeWidth={2.5} />
-      </button>
+      <IconButton onClick={onBack} className="back-btn" aria-label="Go back">
+        <ArrowLeft size={22} />
+      </IconButton>
     </div>
   );
 };

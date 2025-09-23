@@ -1,19 +1,22 @@
-import React from 'react';
-import type { AudioTrack } from '../types';
+import React from "react";
+import type { AudioTrack } from "../types";
 
 interface TrackInfoProps {
   track: AudioTrack;
   className?: string;
 }
 
-export const TrackInfo: React.FC<TrackInfoProps> = ({ track, className = '' }) => {
+export const TrackInfo: React.FC<TrackInfoProps> = ({
+  track,
+  className = "",
+}) => {
   return (
     <div className={`track-details ${className}`}>
       <h1 className="track-title">{track.title}</h1>
-      <p className="track-artist">{track.author}</p>
-      <div className="track-description">
+      {/* <p className="track-artist">{track.author}</p> */}
+      {/* <div className="track-description">
         <p>{track.description}</p>
-      </div>
+      </div> */}
     </div>
   );
 };
@@ -26,7 +29,7 @@ export const MobileTrackInfo: React.FC<MobileTrackInfoProps> = ({ track }) => {
   return (
     <div className="mobile-track-info">
       <h2 className="mobile-track-title">{track.title}</h2>
-      <p className="mobile-track-artist">{track.author}</p>
+      {/* <p className="mobile-track-artist">{track.author}</p> */}
     </div>
   );
 };

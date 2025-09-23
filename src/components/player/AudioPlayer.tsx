@@ -9,7 +9,6 @@ const Background = React.lazy(() => import("./components/Background").then(m => 
 const TopNavigation = React.lazy(() => import("./components/TopNavigation").then(m => ({ default: m.TopNavigation })));
 const AlbumArt = React.lazy(() => import("./components/AlbumArt").then(m => ({ default: m.AlbumArt })));
 const TrackInfo = React.lazy(() => import("./components/TrackInfo").then(m => ({ default: m.TrackInfo })));
-const MobileTrackInfo = React.lazy(() => import("./components/TrackInfo").then(m => ({ default: m.MobileTrackInfo })));
 const ProgressBar = React.lazy(() => import("./components/ProgressBar").then(m => ({ default: m.ProgressBar })));
 const ControlPanel = React.lazy(() => import("./components/ControlPanel").then(m => ({ default: m.ControlPanel })));
 const ErrorState = React.lazy(() => import("./components/ErrorState").then(m => ({ default: m.ErrorState })));
@@ -32,6 +31,8 @@ const AudioPlayer: React.FC = () => {
   const [track, setTrack] = useState<AudioTrack | undefined>(undefined);
   const [trackError, setTrackError] = useState<string | null>(null);
   const [isLoadingTrack, setIsLoadingTrack] = useState<boolean>(true);
+  const [isShuffle, setIsShuffle] = useState<boolean>(false);
+  const [isRepeat, setIsRepeat] = useState<boolean>(false);
 
   const {
     audioRef,
@@ -94,6 +95,14 @@ const AudioPlayer: React.FC = () => {
 
   const handleBack = () => {
     navigate("/audio-library");
+  };
+
+  const handleToggleShuffle = () => {
+    setIsShuffle(!isShuffle);
+  };
+
+  const handleToggleRepeat = () => {
+    setIsRepeat(!isRepeat);
   };
 
   // Loading state - show proper loader while fetching track
@@ -168,14 +177,10 @@ const AudioPlayer: React.FC = () => {
             <TrackInfo track={track} />
           </Suspense>
         </div>
-      </div>
+      </div>  
 
       {/* Bottom Controls */}
       <div className="bottom-controls">
-        <Suspense fallback={<div>Loading mobile info...</div>}>
-          <MobileTrackInfo track={track} />
-        </Suspense>
-
         <Suspense fallback={<div>Loading progress...</div>}>
           <ProgressBar
             currentTime={state.currentTime}
@@ -194,6 +199,10 @@ const AudioPlayer: React.FC = () => {
             onSkipBackward={skipBackward}
             onSkipForward={skipForward}
             onToggleMute={toggleMute}
+            onToggleShuffle={handleToggleShuffle}
+            onToggleRepeat={handleToggleRepeat}
+            isShuffle={isShuffle}
+            isRepeat={isRepeat}
             disabled={state.isLoading || !track.audioUrl}
           />
         </Suspense>
