@@ -151,14 +151,14 @@ const AudioPlayer: React.FC = () => {
     }
   };
 
-//   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const vol = parseFloat(e.target.value);
-//     setVolume(vol);
-//     if (audioRef.current) {
-//       audioRef.current.volume = vol;
-//     }
-//     setIsMuted(vol === 0);
-//   };
+  //   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //     const vol = parseFloat(e.target.value);
+  //     setVolume(vol);
+  //     if (audioRef.current) {
+  //       audioRef.current.volume = vol;
+  //     }
+  //     setIsMuted(vol === 0);
+  //   };
 
   const toggleMute = () => {
     if (audioRef.current) {
@@ -340,25 +340,8 @@ const AudioPlayer: React.FC = () => {
         {/* Control Buttons */}
         <div className="control-panel">
           <div className="left-controls">
-            <button className="control-btn">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-              </svg>
-            </button>
-            <button className="control-btn">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-              </svg>
+            <button onClick={toggleMute} className="volume-btn">
+              {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
             </button>
           </div>
 
@@ -366,7 +349,6 @@ const AudioPlayer: React.FC = () => {
             <button onClick={skipBackward} className="skip-btn">
               <SkipBack size={20} />
             </button>
-
             <button
               onClick={togglePlayPause}
               className="play-pause-btn"
@@ -380,16 +362,12 @@ const AudioPlayer: React.FC = () => {
                 <Play size={24} />
               )}
             </button>
-
             <button onClick={skipForward} className="skip-btn">
               <SkipForward size={20} />
             </button>
           </div>
 
           <div className="right-controls">
-            <button onClick={toggleMute} className="volume-btn">
-              {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-            </button>
             <button className="menu-btn">
               <svg
                 width="20"

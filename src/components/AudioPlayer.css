@@ -305,6 +305,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 
 .left-controls,
@@ -312,11 +313,22 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  min-width: 80px;
+}
+
+.left-controls {
+  justify-content: flex-start;
+}
+
+.right-controls {
+  justify-content: flex-end;
 }
 
 .main-controls {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex: none;
   gap: 24px;
 }
 
@@ -477,22 +489,55 @@
   }
 
   .control-panel {
-    flex-direction: column;
-    gap: 16px;
+    padding: 0 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .main-controls {
-    order: -1;
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .left-controls,
+  .right-controls {
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+  }
+
+  .left-controls {
+    justify-content: flex-start;
+  }
+
+  .right-controls {
+    justify-content: flex-end;
   }
 
   .play-pause-btn {
-    width: 56px;
-    height: 56px;
+    width: 60px;
+    height: 60px;
   }
 
-  .track-metadata {
-    flex-direction: column;
+  .skip-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .left-controls,
+  .right-controls {
     gap: 12px;
+  }
+
+  .control-btn,
+  .volume-btn,
+  .menu-btn {
+    width: 40px;
+    height: 40px;
   }
 }
 
@@ -837,8 +882,8 @@
   align-items: center;
   justify-content: center;
   gap: 32px;
-  margin-bottom: 40px;
-  padding: 24px 0;
+  margin-bottom: 15px;
+  /* padding: 24px 0; */
 }
 
 .control-button {
@@ -1232,10 +1277,31 @@
   .control-panel {
     padding: 0 15px;
     margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .main-controls {
-    gap: 15px;
+    gap: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .left-controls,
+  .right-controls {
+    min-width: 50px;
+    display: flex;
+    align-items: center;
+  }
+
+  .left-controls {
+    justify-content: flex-start;
+  }
+
+  .right-controls {
+    justify-content: flex-end;
   }
 
   .play-pause-btn {
