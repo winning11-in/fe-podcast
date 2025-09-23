@@ -28,6 +28,9 @@ import { useThemeContext } from "../../hooks/useThemeContext";
 interface SidebarProps {
   collapsed?: boolean;
   setCollapsed: (collapsed: boolean) => void;
+  isMobile?: boolean;
+  drawerOpen?: boolean;
+  setDrawerOpen?: (open: boolean) => void;
 }
 
 interface StyledListItemButtonProps extends ListItemButtonProps {
@@ -141,13 +144,18 @@ const ThemeToggleButton = styled(IconButton, {
 const Sidebar: React.FC<SidebarProps> = ({
   collapsed = false,
   setCollapsed,
+  isMobile = false,
+  drawerOpen = false,
+  setDrawerOpen,
 }) => {
   const { isDarkMode, toggleTheme } = useThemeContext();
-  const drawerWidth = collapsed ? 64 : 240;
+  const drawerWidth = isMobile ? 240 : (collapsed ? 64 : 240);
 
   return (
     <Drawer
-      variant="permanent"
+      variant={isMobile ? "temporary" : "permanent"}
+      open={isMobile ? drawerOpen : true}
+      onClose={isMobile ? () => setDrawerOpen?.(false) : undefined}
       sx={{
         width: drawerWidth,
         flexShrink: 0,
@@ -179,10 +187,12 @@ const Sidebar: React.FC<SidebarProps> = ({
           {collapsed ? "" : "Podcasts"}
         </Typography>
         <Box
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={() => isMobile ? setDrawerOpen?.(false) : setCollapsed(!collapsed)}
           sx={{ color: "#fff", cursor: "pointer" }}
         >
-          {collapsed ? (
+          {isMobile ? (
+            <PanelLeftClose size={22} />
+          ) : collapsed ? (
             <PanelLeftOpen size={22} />
           ) : (
             <PanelLeftClose size={22} />
@@ -217,38 +227,40 @@ const Sidebar: React.FC<SidebarProps> = ({
         ))}
       </List>
 
-      {/* Theme Toggle */}
-      <Box
-        sx={{
-          mt: "auto",
-          mb: 2,
-          px: 2,
-          display: "flex",
-          justifyContent: collapsed ? "center" : "flex-start",
-        }}
-      >
-        <ThemeToggleButton
-          $isDarkMode={isDarkMode}
-          $collapsed={collapsed}
-          onClick={toggleTheme}
-          disableRipple
+      {/* Theme Toggle - only show on desktop */}
+      {!isMobile && (
+        <Box
+          sx={{
+            mt: "auto",
+            mb: 2,
+            px: 2,
+            display: "flex",
+            justifyContent: collapsed ? "center" : "flex-start",
+          }}
         >
-          {isDarkMode ? <Moon size={20} /> : <Sun size={20} />}
-          {!collapsed && (
-            <Typography
-              variant="body2"
-              sx={{
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                color: "#fff",
-                textShadow: "0 1px 2px rgba(0,0,0,0.1)",
-              }}
-            >
-              {isDarkMode ? "Dark Mode" : "Light Mode"}
-            </Typography>
-          )}
-        </ThemeToggleButton>
-      </Box>
+          <ThemeToggleButton
+            $isDarkMode={isDarkMode}
+            $collapsed={collapsed}
+            onClick={toggleTheme}
+            disableRipple
+          >
+            {isDarkMode ? <Moon size={20} /> : <Sun size={20} />}
+            {!collapsed && (
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: "0.875rem",
+                  fontWeight: 500,
+                  color: "#fff",
+                  textShadow: "0 1px 2px rgba(0,0,0,0.1)",
+                }}
+              >
+                {isDarkMode ? "Dark Mode" : "Light Mode"}
+              </Typography>
+            )}
+          </ThemeToggleButton>
+        </Box>
+      )}
     </Drawer>
   );
 };
