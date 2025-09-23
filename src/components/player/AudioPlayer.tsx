@@ -32,8 +32,6 @@ const AudioPlayer: React.FC = () => {
   const [track, setTrack] = useState<AudioTrack | undefined>(undefined);
   const [trackError, setTrackError] = useState<string | null>(null);
   const [isLoadingTrack, setIsLoadingTrack] = useState<boolean>(true);
-  const [isShuffle, setIsShuffle] = useState<boolean>(false);
-  const [isRepeat, setIsRepeat] = useState<boolean>(false);
 
   const {
     audioRef,
@@ -103,14 +101,6 @@ const AudioPlayer: React.FC = () => {
 
   const handleBack = () => {
     navigate(-1);
-  };
-
-  const handleToggleShuffle = () => {
-    setIsShuffle(!isShuffle);
-  };
-
-  const handleToggleRepeat = () => {
-    setIsRepeat(!isRepeat);
   };
 
   if (isLoadingTrack) {
@@ -198,10 +188,6 @@ const AudioPlayer: React.FC = () => {
             onSkipBackward={skipBackward}
             onSkipForward={skipForward}
             onToggleMute={toggleMute}
-            onToggleShuffle={handleToggleShuffle}
-            onToggleRepeat={handleToggleRepeat}
-            isShuffle={isShuffle}
-            isRepeat={isRepeat}
             disabled={state.isLoading || !track.audioUrl}
           />
         </Suspense>

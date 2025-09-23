@@ -380,24 +380,17 @@ body {
 .control-panel {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
-}
-
-.left-controls,
-.right-controls {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  min-width: 80px;
+  position: relative;
 }
 
 .left-controls {
-  justify-content: flex-start;
-}
-
-.right-controls {
-  justify-content: flex-end;
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .main-controls {
@@ -406,6 +399,42 @@ body {
   justify-content: center;
   flex: none;
   gap: 24px;
+}
+
+/* Mobile styles for control panel */
+@media (max-width: 768px) {
+  .control-panel {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .left-controls {
+    flex: 0 0 auto;
+    margin-right: auto;
+  }
+
+  .main-controls {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .play-pause-btn {
+    width: 56px;
+    height: 56px;
+  }
+
+  .skip-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .volume-btn {
+    width: 44px;
+    height: 44px;
+  }
 }
 
 .control-btn,

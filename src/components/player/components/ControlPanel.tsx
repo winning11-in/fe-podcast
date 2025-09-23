@@ -6,9 +6,6 @@ import {
   SkipForward,
   Volume2,
   VolumeX,
-  MoreHorizontal,
-  Shuffle,
-  Repeat,
 } from 'lucide-react';
 import type { AudioPlayerState } from '../types';
 
@@ -18,10 +15,6 @@ interface ControlPanelProps {
   onSkipBackward: () => void;
   onSkipForward: () => void;
   onToggleMute: () => void;
-  onToggleShuffle?: () => void;
-  onToggleRepeat?: () => void;
-  isShuffle?: boolean;
-  isRepeat?: boolean;
   disabled?: boolean;
 }
 
@@ -31,10 +24,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
   onSkipBackward,
   onSkipForward,
   onToggleMute,
-  onToggleShuffle,
-  onToggleRepeat,
-  isShuffle = false,
-  isRepeat = false,
   disabled = false,
 }) => {
   const { isPlaying, isLoading, isMuted } = state;
@@ -42,14 +31,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
   return (
     <div className="control-panel">
       <div className="left-controls">
-        <button 
-          onClick={onToggleShuffle} 
-          className={`control-btn ${isShuffle ? 'active' : ''}`}
-          aria-label="Toggle shuffle"
-          disabled={disabled}
-        >
-          <Shuffle size={20} />
-        </button>
         <button 
           onClick={onToggleMute} 
           className="volume-btn"
@@ -98,24 +79,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           disabled={disabled}
         >
           <SkipForward size={20} />
-        </button>
-      </div>
-
-      <div className="right-controls">
-        <button 
-          onClick={onToggleRepeat} 
-          className={`control-btn ${isRepeat ? 'active' : ''}`}
-          aria-label="Toggle repeat"
-          disabled={disabled}
-        >
-          <Repeat size={20} />
-        </button>
-        <button 
-          className="menu-btn"
-          aria-label="More options"
-          disabled={disabled}
-        >
-          <MoreHorizontal size={20} />
         </button>
       </div>
     </div>
