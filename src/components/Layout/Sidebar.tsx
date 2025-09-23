@@ -191,7 +191,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             fontWeight: "bold"
           }}
         >
-          {collapsed ? "" : "Podcasts"}
+          {collapsed ? "" : "Sonora"}
         </Typography>
         <Box
           onClick={() => isMobile ? setDrawerOpen?.(false) : setCollapsed(!collapsed)}
