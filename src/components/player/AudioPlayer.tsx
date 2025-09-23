@@ -31,6 +31,7 @@ const AudioPlayer: React.FC = () => {
   const navigate = useNavigate();
   const [track, setTrack] = useState<AudioTrack | undefined>(undefined);
   const [trackError, setTrackError] = useState<string | null>(null);
+  const [isLoadingTrack, setIsLoadingTrack] = useState<boolean>(true);
 
   const {
     audioRef,
@@ -50,29 +51,41 @@ const AudioPlayer: React.FC = () => {
     const loadTrack = async () => {
       if (!id) {
         setTrackError("No track ID provided");
+        setIsLoadingTrack(false);
         return;
       }
 
       try {
+        setIsLoadingTrack(true);
+        setTrackError(null);
+        
         const foundTrack = await AudioTrackService.getTrackById(id);
         if (!foundTrack) {
-          setTrackError("Track not found");
+          setTrackError("Track not found in library");
+          setIsLoadingTrack(false);
           return;
         }
 
-        // Validate audio URL for large files
+        // For direct URL access, we'll validate the audio URL but be more lenient
         if (foundTrack.audioUrl) {
-          const isValidUrl = await AudioTrackService.validateAudioUrl(foundTrack.audioUrl);
-          if (!isValidUrl) {
-            setTrackError("Audio file is not accessible");
-            return;
+          try {
+            const isValidUrl = await AudioTrackService.validateAudioUrl(foundTrack.audioUrl);
+            if (!isValidUrl) {
+              console.warn('Audio URL validation failed, but proceeding with track load');
+              // We'll still proceed to load the track and let the audio element handle errors
+            }
+          } catch (validationError) {
+            console.warn('Audio URL validation threw error, but proceeding:', validationError);
+            // Continue with track loading even if validation fails
           }
         }
 
         setTrack(foundTrack);
+        setIsLoadingTrack(false);
       } catch (error) {
         console.error("Failed to load track:", error);
-        setTrackError("Failed to load track");
+        setTrackError("Failed to load track. Please try again.");
+        setIsLoadingTrack(false);
       }
     };
 
@@ -83,11 +96,41 @@ const AudioPlayer: React.FC = () => {
     navigate("/audio-library");
   };
 
-  // Error state
-  if (trackError || !track) {
+  // Loading state - show proper loader while fetching track
+  if (isLoadingTrack) {
+    return (
+      <div className="fullscreen-audio-player">
+        <Suspense fallback={<div>Loading background...</div>}>
+          <Background />
+        </Suspense>
+        
+        <Suspense fallback={<div>Loading navigation...</div>}>
+          <TopNavigation onBack={handleBack} />
+        </Suspense>
+        
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p className="loading-text">Loading audio track...</p>
+          <p className="loading-subtext">Preparing audio player for direct access</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state - only show when there's an actual error
+  if (trackError) {
     return (
       <Suspense fallback={<div>Loading...</div>}>
-        <ErrorState onBack={handleBack} error={trackError || undefined} />
+        <ErrorState onBack={handleBack} error={trackError} />
+      </Suspense>
+    );
+  }
+
+  // Safety check - if no track and not loading, show error
+  if (!track) {
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <ErrorState onBack={handleBack} error="Track data unavailable" />
       </Suspense>
     );
   }
@@ -155,6 +198,16 @@ const AudioPlayer: React.FC = () => {
           />
         </Suspense>
       </div>
+
+      {/* Audio Loading Overlay - shows when audio file is loading */}
+      {state.isLoading && (
+        <div className="audio-loading-overlay">
+          <div className="audio-loading-content">
+            <div className="loading-spinner"></div>
+            <p className="loading-text">Preparing audio...</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

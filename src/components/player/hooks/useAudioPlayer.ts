@@ -147,6 +147,7 @@ export const useAudioPlayer = ({ track }: UseAudioPlayerProps) => {
     };
 
     const handleLoadStart = () => {
+      console.log('Audio loading started');
       setState(prev => ({ 
         ...prev, 
         isLoading: true,
@@ -155,6 +156,17 @@ export const useAudioPlayer = ({ track }: UseAudioPlayerProps) => {
     };
 
     const handleCanPlay = () => {
+      console.log('Audio can play');
+      setState(prev => ({ ...prev, isLoading: false }));
+    };
+
+    const handleWaiting = () => {
+      console.log('Audio waiting/buffering');
+      setState(prev => ({ ...prev, isLoading: true }));
+    };
+
+    const handleCanPlayThrough = () => {
+      console.log('Audio can play through');
       setState(prev => ({ ...prev, isLoading: false }));
     };
 
@@ -172,6 +184,8 @@ export const useAudioPlayer = ({ track }: UseAudioPlayerProps) => {
     audio.addEventListener("error", handleError);
     audio.addEventListener("loadstart", handleLoadStart);
     audio.addEventListener("canplay", handleCanPlay);
+    audio.addEventListener("waiting", handleWaiting);
+    audio.addEventListener("canplaythrough", handleCanPlayThrough);
     audio.addEventListener("progress", handleProgress);
 
     return () => {
@@ -181,6 +195,8 @@ export const useAudioPlayer = ({ track }: UseAudioPlayerProps) => {
       audio.removeEventListener("error", handleError);
       audio.removeEventListener("loadstart", handleLoadStart);
       audio.removeEventListener("canplay", handleCanPlay);
+      audio.removeEventListener("waiting", handleWaiting);
+      audio.removeEventListener("canplaythrough", handleCanPlayThrough);
       audio.removeEventListener("progress", handleProgress);
     };
   }, [track, updateCurrentTime]);

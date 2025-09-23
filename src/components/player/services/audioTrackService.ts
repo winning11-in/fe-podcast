@@ -48,10 +48,38 @@ export class AudioTrackService {
 
   static async validateAudioUrl(url: string): Promise<boolean> {
     try {
-      const response = await fetch(url, { method: 'HEAD' });
-      return response.ok;
+      // For direct URL access, we'll be more lenient with validation
+      // Only do a basic URL format check and a quick HEAD request with timeout
+      const urlPattern = /^https?:\/\/.+/;
+      if (!urlPattern.test(url)) {
+        return false;
+      }
+
+      // Quick validation with short timeout to avoid delays on direct access
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+
+      try {
+        const response = await fetch(url, { 
+          method: 'HEAD',
+          signal: controller.signal,
+          // Add headers to handle CORS and caching
+          headers: {
+            'Range': 'bytes=0-0', // Request just the first byte to validate
+          }
+        });
+        clearTimeout(timeoutId);
+        return response.ok || response.status === 206; // Accept partial content too
+      } catch (error) {
+        clearTimeout(timeoutId);
+        // If validation fails, we'll still allow the track to load
+        // The audio element will handle the actual loading and show its own errors
+        console.warn('Audio URL validation failed, but allowing track to load:', error);
+        return true; // Return true to allow the track to load anyway
+      }
     } catch {
-      return false;
+      // Always return true to avoid blocking track loading on validation failures
+      return true;
     }
   }
 }

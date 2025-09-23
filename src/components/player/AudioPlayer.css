@@ -458,6 +458,84 @@ html, body {
   100% { transform: rotate(360deg); }
 }
 
+/* Loading Container for track loading */
+.loading-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  z-index: 100;
+}
+
+.loading-container .loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(32, 178, 170, 0.3);
+  border-top: 3px solid #20B2AA;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.loading-text {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+  margin: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.loading-subtext {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  margin: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Audio Loading Overlay - shows when audio file is buffering */
+.audio-loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.audio-loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 32px;
+  border-radius: 16px;
+  border: 1px solid rgba(32, 178, 170, 0.3);
+}
+
+.audio-loading-content .loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(32, 178, 170, 0.3);
+  border-top: 3px solid #20B2AA;
+}
+
+.audio-loading-content .loading-text {
+  font-size: 16px;
+  margin: 0;
+}
+
 /* Error State */
 .audio-player-error {
   display: flex;
@@ -638,6 +716,35 @@ html, body {
   .progress-track {
     order: -1;
     height: 4px;
+  }
+
+  .loading-container .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border-width: 2.5px;
+  }
+
+  .loading-text {
+    font-size: 16px;
+  }
+
+  .loading-subtext {
+    font-size: 12px;
+  }
+
+  .audio-loading-content {
+    padding: 24px;
+    margin: 20px;
+  }
+
+  .audio-loading-content .loading-spinner {
+    width: 32px;
+    height: 32px;
+    border-width: 2px;
+  }
+
+  .audio-loading-content .loading-text {
+    font-size: 14px;
   }
 }
 
