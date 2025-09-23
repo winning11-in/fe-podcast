@@ -7,7 +7,7 @@ import { CssBaseline, useTheme } from "@mui/material";
 import { useState } from "react";
 import Home from "./components/Home";
 import AudioLibrary from "./components/AudioLibrary";
-import AudioPlayer from "./components/AudioPlayer";
+import AudioPlayer from "./components/player/AudioPlayer";
 
 function App() {
   const theme = useTheme();
