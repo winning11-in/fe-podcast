@@ -164,23 +164,15 @@ export const AudioCard = styled(Card)(({ theme }) => ({
   borderRadius: theme.spacing(2),
   overflow: "hidden",
   transition: "all 0.3s ease",
-  boxShadow: theme.shadows[4],
-  border: `1px solid ${
-    theme.palette.mode === "dark"
-      ? "rgba(255,255,255,0.1)"
-      : "rgba(255,255,255,0.3)"
-  }`,
+   
   position: "relative",
   cursor: "pointer",
   background: theme.palette.background.paper,
   "&:hover": {
-    transform: "translateY(-4px)",
+    // transform: "translateY(-4px)",
     boxShadow: theme.shadows[8],
   },
-  "&:focus-within": {
-    outline: `2px solid ${theme.palette.primary.main}`,
-    outlineOffset: 2,
-  },
+ 
 }));
 
 export const CardThumbnail = styled(Box)(() => ({

@@ -43,14 +43,14 @@ function App() {
         ? "linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)"
         : "linear-gradient(180deg, #4440cc 0%, #3733b3 100%)"
       : "transparent",
-    display: isMobile ? "block" : "none",
+    display: isMobile && !isAudioPlayerPage ? "block" : "none",
   };
 
   const contentContainerStyle: React.CSSProperties = {
     display: "flex",
     flex: 1,
     minHeight: 0,
-    marginTop: isMobile ? "64px" : 0,
+    marginTop: isMobile && !isAudioPlayerPage ? "64px" : 0,
   };
 
   const sidebarWrapperStyle: React.CSSProperties = {

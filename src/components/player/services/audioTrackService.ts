@@ -1,4 +1,4 @@
-import type { AudioTrack } from '../types';
+import type { AudioTrack } from "../types";
 
 // Sample data - in real app, this would be an API service
 const audioTracks: AudioTrack[] = [
@@ -12,7 +12,7 @@ const audioTracks: AudioTrack[] = [
     listeners: "3,547",
     date: "2024-09-20",
     thumbnail:
-      "https://res.cloudinary.com/dgvoocfla/video/upload/v1758557619/%E0%A4%87%E0%A4%82%E0%A4%9F%E0%A4%B0%E0%A4%A8%E0%A5%87%E0%A4%9F_%E0%A4%95%E0%A4%BE_%E0%A4%9C%E0%A4%BE%E0%A4%A6%E0%A5%82__%E0%A4%95%E0%A5%88%E0%A4%B8%E0%A5%87_%E0%A4%95%E0%A4%BE%E0%A4%AE_%E0%A4%95%E0%A4%B0%E0%A4%A4%E0%A4%BE_%E0%A4%B9%E0%A5%88_%E0%A4%B9%E0%A4%AE%E0%A4%BE%E0%A4%B0%E0%A4%BE_%E0%A4%A1%E0%A4%BF%E0%A4%9C%E0%A4%BF%E0%A4%9F%E0%A4%B2_%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A4%BE%E0%A4%B0_-_ARPANET__kajgmt.mp4",
+      "https://res.cloudinary.com/dj3xx136b/image/upload/v1758615092/j0maltggz7tjhnrsp5q1.png",
     category: "Technology",
     audioUrl:
       "https://res.cloudinary.com/dgvoocfla/video/upload/v1758557619/%E0%A4%87%E0%A4%82%E0%A4%9F%E0%A4%B0%E0%A4%A8%E0%A5%87%E0%A4%9F_%E0%A4%95%E0%A4%BE_%E0%A4%9C%E0%A4%BE%E0%A4%A6%E0%A5%82__%E0%A4%95%E0%A5%88%E0%A4%B8%E0%A5%87_%E0%A4%95%E0%A4%BE%E0%A4%AE_%E0%A4%95%E0%A4%B0%E0%A4%A4%E0%A4%BE_%E0%A4%B9%E0%A5%88_%E0%A4%B9%E0%A4%AE%E0%A4%BE%E0%A4%B0%E0%A4%BE_%E0%A4%A1%E0%A4%BF%E0%A4%9C%E0%A4%BF%E0%A4%9F%E0%A4%B2_%E0%A4%B8%E0%A4%82%E0%A4%B8%E0%A4%BE%E0%A4%B0_-_ARPANET__kajgmt.mp4",
@@ -27,22 +27,22 @@ const audioTracks: AudioTrack[] = [
     listeners: "2,891",
     date: "2024-09-21",
     thumbnail:
-      "https://res.cloudinary.com/dgvoocfla/image/upload/c_thumb,w_400,h_300/v1758559504/CORS_%E0%A4%95%E0%A5%8D%E0%A4%AF%E0%A4%BE_%E0%A4%B9%E0%A5%88__%E0%A4%95%E0%A5%8D%E0%A4%AF%E0%A5%8B%E0%A4%82_%E0%A5%9B%E0%A4%B0%E0%A5%82%E0%A4%B0%E0%A5%80_%E0%A4%B9%E0%A5%88__%E0%A5%9B%E0%A5%80%E0%A4%B0%E0%A5%8B_%E0%A4%B8%E0%A5%87_%E0%A4%8F%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%82%E0%A4%B8_%E0%A4%A4%E0%A4%95__%E0%A4%B5%E0%A5%87%E0%A4%AC_%E0%A4%B8%E0%A4%BF%E0%A4%95%E0%A5%8D%E0%A4%AF%E0%A5%8B%E0%A4%B0%E0%A4%BF%E0%A4%9F%E0%A5%80_vqfxlu.mp4",
+      "https://res.cloudinary.com/dj3xx136b/image/upload/v1758615175/txikr2f46omistu5f0rq.png",
     category: "Web Security",
     audioUrl:
       "https://res.cloudinary.com/dgvoocfla/video/upload/v1758559504/CORS_%E0%A4%95%E0%A5%8D%E0%A4%AF%E0%A4%BE_%E0%A4%B9%E0%A5%88__%E0%A4%95%E0%A5%8D%E0%A4%AF%E0%A5%8B%E0%A4%82_%E0%A5%9B%E0%A4%B0%E0%A5%82%E0%A4%B0%E0%A5%80_%E0%A4%B9%E0%A5%88__%E0%A5%9B%E0%A5%80%E0%A4%B0%E0%A5%8B_%E0%A4%B8%E0%A5%87_%E0%A4%8F%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%82%E0%A4%B8_%E0%A4%A4%E0%A4%95__%E0%A4%B5%E0%A5%87%E0%A4%AC_%E0%A4%B8%E0%A4%BF%E0%A4%95%E0%A5%8D%E0%A4%AF%E0%A5%8B%E0%A4%B0%E0%A4%BF%E0%A4%9F%E0%A5%80_vqfxlu.mp4",
-  },
+  } 
 ];
 
 export class AudioTrackService {
   static async getTrackById(id: string): Promise<AudioTrack | undefined> {
     // Simulate API delay for large files
-    await new Promise(resolve => setTimeout(resolve, 100));
-    return audioTracks.find(track => track.id === id);
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    return audioTracks.find((track) => track.id === id);
   }
 
   static async getAllTracks(): Promise<AudioTrack[]> {
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
     return audioTracks;
   }
 
@@ -60,13 +60,13 @@ export class AudioTrackService {
       const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
 
       try {
-        const response = await fetch(url, { 
-          method: 'HEAD',
+        const response = await fetch(url, {
+          method: "HEAD",
           signal: controller.signal,
           // Add headers to handle CORS and caching
           headers: {
-            'Range': 'bytes=0-0', // Request just the first byte to validate
-          }
+            Range: "bytes=0-0", // Request just the first byte to validate
+          },
         });
         clearTimeout(timeoutId);
         return response.ok || response.status === 206; // Accept partial content too
@@ -74,7 +74,10 @@ export class AudioTrackService {
         clearTimeout(timeoutId);
         // If validation fails, we'll still allow the track to load
         // The audio element will handle the actual loading and show its own errors
-        console.warn('Audio URL validation failed, but allowing track to load:', error);
+        console.warn(
+          "Audio URL validation failed, but allowing track to load:",
+          error
+        );
         return true; // Return true to allow the track to load anyway
       }
     } catch {

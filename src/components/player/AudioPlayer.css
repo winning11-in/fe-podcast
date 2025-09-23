@@ -54,10 +54,11 @@ body {
   top: 32px;
   left: 32px;
   z-index: 10;
+  display: flex;
+  align-items: center;
 }
 
 .back-btn {
-   
   width: 46px;
   height: 46px;
   background: linear-gradient(
@@ -65,13 +66,12 @@ body {
     rgba(255, 255, 255, 0.15) 0%,
     rgba(255, 255, 255, 0.05) 100%
   );
-   color: white;
+  color: white;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(20px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
- 
 }
 
 .back-btn::before {
@@ -115,7 +115,7 @@ body {
 /* Content Overlay */
 .content-overlay {
   position: absolute;
-  top: 0;
+  /* top: 0; */
   left: 0;
   right: 0;
   bottom: 120px;
@@ -176,14 +176,11 @@ body {
   font-size: 42px;
   font-weight: 700;
   line-height: 1.2;
-  margin: 0 0 12px 0;
-  text-shadow: 0 4px 16px rgba(0, 0, 0, 1);
+  margin: 0 0 0px 0;
   letter-spacing: -0.5px;
   color: #ffffff;
-  background: rgba(24, 24, 24, 0.8);
   padding: 8px 16px;
   border-radius: 8px;
-  backdrop-filter: blur(8px);
   text-align: center;
 }
 
@@ -712,7 +709,7 @@ body {
 
 @media (max-width: 480px) {
   .top-navigation {
-    top: 70px;
+    top: 30px;
     left: 20px;
   }
 
@@ -989,7 +986,7 @@ body {
   font-size: 18px;
   font-weight: 700;
   /* color: #2d3748; */
-  margin: 0 0 12px 0;
+  margin: 0 0 0px 0;
   line-height: 1.2;
 }
 
@@ -1508,7 +1505,7 @@ body {
   }
 
   .top-navigation {
-    top: 70px;
+    top: 30px;
     left: 15px;
   }
 
@@ -1517,6 +1514,7 @@ body {
     gap: 15px;
     align-items: center;
     justify-content: center;
+    bottom: 10px;
   }
 
   .album-art {
@@ -1743,4 +1741,23 @@ body {
 button:focus,
 button:focus-visible {
   outline: none;
+}
+
+.player-svg-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* Ensure it's above the background but below other content */
+  pointer-events: none; /* Prevent interaction if not needed */
+}
+
+.blurred-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  filter: blur(5px);
+  z-index: 0;
 }

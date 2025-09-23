@@ -14,7 +14,7 @@ import { NavLink } from "react-router-dom";
 
 import {
   Home,
-  LayoutList,
+  // LayoutList,
   PanelLeftOpen,
   PanelLeftClose,
   Music,
@@ -75,7 +75,7 @@ const StyledListItemButton = styled(ListItemButton, {
 
 const NAV_ITEMS = [
   { text: "Home", icon: <Home size={18} />, path: "/" },
-  { text: "Dashboard", icon: <LayoutList size={18} />, path: "/dashboard" },
+  // { text: "Dashboard", icon: <LayoutList size={18} />, path: "/dashboard" },
   { text: "Audio Library", icon: <Music size={18} />, path: "/audio-library" },
 ];
 

@@ -5,26 +5,27 @@ import { AudioTrackService } from "./services/audioTrackService";
 import type { AudioTrack } from "./types";
 
 // Lazy load components for better performance
-const Background = React.lazy(() => import("./components/Background").then(m => ({ default: m.Background })));
-const TopNavigation = React.lazy(() => import("./components/TopNavigation").then(m => ({ default: m.TopNavigation })));
-const AlbumArt = React.lazy(() => import("./components/AlbumArt").then(m => ({ default: m.AlbumArt })));
-const TrackInfo = React.lazy(() => import("./components/TrackInfo").then(m => ({ default: m.TrackInfo })));
-const ProgressBar = React.lazy(() => import("./components/ProgressBar").then(m => ({ default: m.ProgressBar })));
-const ControlPanel = React.lazy(() => import("./components/ControlPanel").then(m => ({ default: m.ControlPanel })));
-const ErrorState = React.lazy(() => import("./components/ErrorState").then(m => ({ default: m.ErrorState })));
+const TopNavigation = React.lazy(() =>
+  import("./components/TopNavigation").then((m) => ({
+    default: m.TopNavigation,
+  }))
+);
+const AlbumArt = React.lazy(() =>
+  import("./components/AlbumArt").then((m) => ({ default: m.AlbumArt }))
+);
+
+const ProgressBar = React.lazy(() =>
+  import("./components/ProgressBar").then((m) => ({ default: m.ProgressBar }))
+);
+const ControlPanel = React.lazy(() =>
+  import("./components/ControlPanel").then((m) => ({ default: m.ControlPanel }))
+);
+const ErrorState = React.lazy(() =>
+  import("./components/ErrorState").then((m) => ({ default: m.ErrorState }))
+);
 
 import "./AudioPlayer.css";
 
-/**
- * Main AudioPlayer component with optimized architecture for large audio files
- * Features:
- * - Code splitting for better performance
- * - Custom hooks for state management
- * - Separate service layer for data handling
- * - Modular component structure
- * - Better error handling and loading states
- * - Accessibility improvements
- */
 const AudioPlayer: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const AudioPlayer: React.FC = () => {
       try {
         setIsLoadingTrack(true);
         setTrackError(null);
-        
+
         const foundTrack = await AudioTrackService.getTrackById(id);
         if (!foundTrack) {
           setTrackError("Track not found in library");
@@ -70,13 +71,20 @@ const AudioPlayer: React.FC = () => {
         // For direct URL access, we'll validate the audio URL but be more lenient
         if (foundTrack.audioUrl) {
           try {
-            const isValidUrl = await AudioTrackService.validateAudioUrl(foundTrack.audioUrl);
+            const isValidUrl = await AudioTrackService.validateAudioUrl(
+              foundTrack.audioUrl
+            );
             if (!isValidUrl) {
-              console.warn('Audio URL validation failed, but proceeding with track load');
+              console.warn(
+                "Audio URL validation failed, but proceeding with track load"
+              );
               // We'll still proceed to load the track and let the audio element handle errors
             }
           } catch (validationError) {
-            console.warn('Audio URL validation threw error, but proceeding:', validationError);
+            console.warn(
+              "Audio URL validation threw error, but proceeding:",
+              validationError
+            );
             // Continue with track loading even if validation fails
           }
         }
@@ -94,7 +102,7 @@ const AudioPlayer: React.FC = () => {
   }, [id]);
 
   const handleBack = () => {
-    navigate("/audio-library");
+    navigate(-1);
   };
 
   const handleToggleShuffle = () => {
@@ -105,28 +113,24 @@ const AudioPlayer: React.FC = () => {
     setIsRepeat(!isRepeat);
   };
 
-  // Loading state - show proper loader while fetching track
   if (isLoadingTrack) {
     return (
       <div className="fullscreen-audio-player">
-        <Suspense fallback={<div>Loading background...</div>}>
-          <Background />
-        </Suspense>
-        
         <Suspense fallback={<div>Loading navigation...</div>}>
-          <TopNavigation onBack={handleBack} />
+          <TopNavigation onBack={handleBack} track={track} />
         </Suspense>
-        
+
         <div className="loading-container">
           <div className="loading-spinner"></div>
           <p className="loading-text">Loading audio track...</p>
-          <p className="loading-subtext">Preparing audio player for direct access</p>
+          <p className="loading-subtext">
+            Preparing audio player for direct access
+          </p>
         </div>
       </div>
     );
   }
 
-  // Error state - only show when there's an actual error
   if (trackError) {
     return (
       <Suspense fallback={<div>Loading...</div>}>
@@ -146,40 +150,35 @@ const AudioPlayer: React.FC = () => {
 
   return (
     <div className="fullscreen-audio-player">
-      {/* Hidden audio element with optimized settings for large files */}
-      <audio 
-        ref={audioRef} 
-        src={track.audioUrl} 
+      <div
+        className="blurred-background"
+        style={{
+          backgroundImage: `url(${track.thumbnail})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+        }}
+      ></div>
+
+      <audio
+        ref={audioRef}
+        src={track.audioUrl}
         preload="metadata"
         crossOrigin="anonymous"
       />
 
-      <Suspense fallback={<div>Loading background...</div>}>
-        <Background track={track} />
-      </Suspense>
-
       <Suspense fallback={<div>Loading navigation...</div>}>
-        <TopNavigation onBack={handleBack} />
+        <TopNavigation onBack={handleBack} track={track} />
       </Suspense>
 
-      {/* Main Content Overlay */}
       <div className="content-overlay">
-        {/* Left Side - Album Art */}
         <div className="left-content">
-          <Suspense fallback={<div className="album-art-skeleton">Loading art...</div>}>
-            <AlbumArt track={track} />
+          <Suspense fallback={<div>Loading album art...</div>}>
+            <AlbumArt />
           </Suspense>
         </div>
+      </div>
 
-        {/* Right Side - Track Info & Description */}
-        <div className="right-content">
-          <Suspense fallback={<div>Loading track info...</div>}>
-            <TrackInfo track={track} />
-          </Suspense>
-        </div>
-      </div>  
-
-      {/* Bottom Controls */}
       <div className="bottom-controls">
         <Suspense fallback={<div>Loading progress...</div>}>
           <ProgressBar
@@ -208,7 +207,6 @@ const AudioPlayer: React.FC = () => {
         </Suspense>
       </div>
 
-      {/* Audio Loading Overlay - shows when audio file is loading */}
       {state.isLoading && (
         <div className="audio-loading-overlay">
           <div className="audio-loading-content">
