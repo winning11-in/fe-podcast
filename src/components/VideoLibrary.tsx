@@ -1,14 +1,32 @@
-import { Clock } from "lucide-react";
+import React from "react";
+import { Clock, Heart, DownloadCloud, Grid, List } from "lucide-react";
 import {
   Box,
   Typography,
-  Card,
   CardContent,
-  Chip,
+  IconButton,
+  Select,
+  MenuItem,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { ContentHeader, ContentTitle } from "./AudioLibrary.styles";
+import { ContentHeader } from "./AudioLibrary.styles";
 import { useNavigate } from "react-router-dom";
+import {
+  SectionContainer,
+  CardsWrapper,
+  StyledCard,
+  StyledChip,
+  VideoContainer,
+  ThumbnailImage,
+  OverlayGradient,
+  DurationBadge,
+  ActionsRow,
+  HeaderRow,
+  Controls,
+  SearchInput,
+} from "./VideoLibrary.styled";
+import { useThemeContext } from "../hooks/useThemeContext";
 
 interface VideoItem {
   id: string;
@@ -22,50 +40,17 @@ interface VideoItem {
   category: string;
 }
 
-const SectionContainer = styled(Box)(() => ({
-  textAlign: "center",
-}));
-
-const CardsWrapper = styled(Box)(({ theme }) => ({
-  marginTop: theme.spacing(5),
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-  gap: theme.spacing(4),
-}));
-
-const StyledCard = styled(Card)(() => ({
-  borderRadius: "16px",
-  boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
-  overflow: "hidden",
-}));
-
-const StyledChip = styled(Chip)(({ theme }) => ({
-  position: "absolute",
-  top: theme.spacing(1.5),
-  left: theme.spacing(1.5),
-  fontWeight: 600,
-  fontSize: "0.75rem",
-  zIndex: 1,
-}));
-
-const VideoContainer = styled(Box)(() => ({
-  position: "relative",
-  width: "100%",
-  height: "180px",
-  overflow: "hidden",
-}));
-
-const PlayInfo = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginTop: theme.spacing(1),
-  fontSize: "0.85rem",
-  color: theme.palette.text.secondary,
-}));
-
 const VideoLibrary = () => {
   const navigate = useNavigate();
+  const [view, setView] = React.useState<"grid" | "list">("grid");
+  const { isDarkMode } = useThemeContext();
+
+  const handleViewChange = (
+    _event: React.MouseEvent<HTMLElement>,
+    next: "grid" | "list" | null
+  ) => {
+    if (next) setView(next);
+  };
 
   const handleVideoClick = (video: VideoItem) => {
     navigate(`/video-player/${video.id}`);
@@ -110,45 +95,164 @@ const VideoLibrary = () => {
   return (
     <SectionContainer>
       <ContentHeader>
-        <ContentTitle variant="h4">Video Library</ContentTitle>
+        <Box>
+          <Typography
+            variant="h5"
+            sx={{
+              background: isDarkMode
+                ? "linear-gradient(90deg,#00e5ff,#ff9800)"
+                : "none",
+              WebkitBackgroundClip: isDarkMode ? "text" : "initial",
+              WebkitTextFillColor: isDarkMode ? "transparent" : "initial",
+              color: isDarkMode ? "transparent" : "#333",
+              fontWeight: "bold",
+            }}
+          >
+            {"Video Library"}
+          </Typography>
+        </Box>
       </ContentHeader>
-      <CardsWrapper>
+
+      <HeaderRow>
+        <Controls>
+          <SearchInput
+            placeholder="Search videos..."
+            inputProps={{ "aria-label": "search videos" }}
+          />
+          <Select
+            defaultValue="all"
+            size="small"
+            sx={{
+              minWidth: 160,
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#00e5ff",
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#00bcd4",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#00e5ff",
+              },
+            }}
+          >
+            <MenuItem value="all">All Categories</MenuItem>
+            <MenuItem value="react">React</MenuItem>
+            <MenuItem value="js">JavaScript</MenuItem>
+            <MenuItem value="css">CSS</MenuItem>
+          </Select>
+        </Controls>
+
+        <Controls>
+          <ToggleButtonGroup
+            value={view}
+            exclusive
+            onChange={handleViewChange}
+            size="small"
+            sx={{
+              background: (t) =>
+                t.palette.mode === "dark"
+                  ? "rgba(255,255,255,0.05)"
+                  : "rgba(0,0,0,0.05)",
+              borderRadius: 2,
+              padding: 0.5,
+              "& .MuiToggleButton-root": {
+                color: (t) => t.palette.text.secondary,
+                border: "none",
+                borderRadius: "8px !important",
+                px: 2,
+                py: 1,
+                "&.Mui-selected": {
+                  background: "#00e5ff",
+                  color: (t) => (t.palette.mode === "dark" ? "#000" : "#fff"),
+                  "&:hover": {
+                    background: "#00bcd4",
+                  },
+                },
+                "&:hover": {
+                  background: (t) => t.palette.action.hover,
+                },
+              },
+            }}
+          >
+            <ToggleButton value="grid" aria-label="grid view">
+              <Grid size={16} />
+            </ToggleButton>
+            <ToggleButton value="list" aria-label="list view">
+              <List size={16} />
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Controls>
+      </HeaderRow>
+
+      <CardsWrapper view={view}>
         {videoItems.map((video) => (
-          <StyledCard key={video.id} onClick={() => handleVideoClick(video)} sx={{ cursor: "pointer" }}>
-            <VideoContainer>
-              <iframe
-                width="100%"
-                height="180"
-                src={`https://www.youtube.com/embed/${video.youtubeId}`}
-                title={video.title}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                style={{ borderRadius: "16px 16px 0 0" }}
+          <StyledCard
+            key={video.id}
+            view={view}
+            sx={{ cursor: "pointer" }}
+            onClick={() => handleVideoClick(video)}
+          >
+            <VideoContainer view={view}>
+              <ThumbnailImage
+                src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`}
+                alt={video.title}
+                loading="lazy"
               />
+              <OverlayGradient />
               <StyledChip label={video.category} color="primary" />
+              <DurationBadge>{video.duration}</DurationBadge>
             </VideoContainer>
-            <CardContent sx={{ textAlign: "left" }}>
-              <Typography variant="h6" fontWeight={600}>
-                {video.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {video.author}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+
+            <CardContent
+              sx={{
+                textAlign: "left",
+                flex: view === "list" ? 1 : undefined,
+                p: view === "list" ? 2 : undefined,
+              }}
+            >
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="start"
+              >
+                <Box>
+                  <Typography variant="subtitle1" fontWeight={600} noWrap>
+                    {video.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {video.author} • {new Date(video.date).toLocaleDateString()}
+                  </Typography>
+                </Box>
+                <Box>
+                  <IconButton size="small" aria-label="like video">
+                    <Heart size={16} />
+                  </IconButton>
+                  <IconButton size="small" aria-label="download video">
+                    <DownloadCloud size={16} />
+                  </IconButton>
+                </Box>
+              </Box>
+
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ mt: 1 }}
+                noWrap
+              >
                 {video.description}
               </Typography>
-              <PlayInfo>
+
+              <ActionsRow>
                 <Box display="flex" alignItems="center" gap={0.5}>
                   <Clock size={16} />
                   <Typography variant="body2" color="text.secondary">
                     {video.duration}
                   </Typography>
                 </Box>
-                <Typography color="success.main" fontWeight={600}>
+                <Typography color="#00c4d6" fontWeight={600}>
                   {video.views} views
                 </Typography>
-              </PlayInfo>
+              </ActionsRow>
             </CardContent>
           </StyledCard>
         ))}

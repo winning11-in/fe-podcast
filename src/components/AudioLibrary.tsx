@@ -1,18 +1,33 @@
 import React from "react";
-import { Play, Clock } from "lucide-react";
+import { Play, Clock, Grid, List, Heart, DownloadCloud } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
   Typography,
-  Card,
   CardContent,
   CardMedia,
-  Chip,
   IconButton,
+  Select,
+  MenuItem,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import { INTERNET_AUDIO, WEB_DEVELOPMENT } from "../utils/Audio";
-import { ContentHeader, ContentTitle } from "./AudioLibrary.styles";
+import {
+  SectionContainer,
+  CardsWrapper,
+  StyledCard,
+  StyledChip,
+  PlayButton,
+  ActionsRow,
+  HeaderRow,
+  Controls,
+  SearchInput,
+  ContentHeader,
+  AudioContainer,
+  OverlayGradient,
+} from "./AudioLibrary.styled";
+import { useThemeContext } from "../hooks/useThemeContext";
 
 interface AudioTrack {
   id: string;
@@ -27,55 +42,17 @@ interface AudioTrack {
   audioUrl?: string;
 }
 
-const SectionContainer = styled(Box)(() => ({
-  textAlign: "center",
-}));
-
-const CardsWrapper = styled(Box)(({ theme }) => ({
-  marginTop: theme.spacing(5),
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-  gap: theme.spacing(4),
-}));
-
-const StyledCard = styled(Card)(() => ({
-  borderRadius: "16px",
-  boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
-  overflow: "hidden",
-}));
-
-const StyledChip = styled(Chip)(({ theme }) => ({
-  position: "absolute",
-  top: theme.spacing(1.5),
-  left: theme.spacing(1.5),
-  fontWeight: 600,
-  fontSize: "0.75rem",
-}));
-
-const PlayButton = styled(IconButton)(() => ({
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  background: "rgba(0,0,0,0.45)",
-  color: "#fff",
-  zIndex: 2,
-  "&:hover": {
-    background: "rgba(0,0,0,0.55)",
-  },
-}));
-
-const PlayInfo = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  marginTop: theme.spacing(1),
-  fontSize: "0.85rem",
-  color: theme.palette.text.secondary,
-}));
-
 const AudioLibrary = () => {
   const navigate = useNavigate();
+  const { isDarkMode } = useThemeContext();
+  const [view, setView] = React.useState<"grid" | "list">("grid");
+
+  const handleViewChange = (
+    _event: React.MouseEvent<HTMLElement>,
+    next: "grid" | "list" | null
+  ) => {
+    if (next) setView(next);
+  };
 
   const getDefaultAudioThumbnail = () => {
     return `data:image/svg+xml;base64,${btoa(`
@@ -150,47 +127,162 @@ const AudioLibrary = () => {
   return (
     <SectionContainer>
       <ContentHeader>
-        <ContentTitle variant="h4">Audio Library</ContentTitle>
-      </ContentHeader>{" "}
-      <CardsWrapper>
+        <Typography
+          variant="h5"
+          fontWeight="bold"
+          sx={{
+            mb: 0.5,
+            background: "linear-gradient(90deg,#00e5ff,#ff9800)",
+            WebkitBackgroundClip: isDarkMode ? "text" : "initial",
+            WebkitTextFillColor: isDarkMode ? "transparent" : "initial",
+          }}
+        >
+          Audio Library
+        </Typography>
+      </ContentHeader>
+
+      <HeaderRow>
+        <Controls>
+          <SearchInput
+            placeholder="Search audio tracks..."
+            inputProps={{ "aria-label": "search audio tracks" }}
+          />
+          <Select
+            defaultValue="all"
+            size="small"
+            sx={{
+              minWidth: 160,
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#00e5ff",
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#00bcd4",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#00e5ff",
+              },
+            }}
+          >
+            <MenuItem value="all">All Categories</MenuItem>
+            <MenuItem value="technology">Technology</MenuItem>
+            <MenuItem value="web-security">Web Security</MenuItem>
+            <MenuItem value="ai-ml">AI/ML</MenuItem>
+          </Select>
+        </Controls>
+
+        <Controls>
+          <ToggleButtonGroup
+            value={view}
+            exclusive
+            onChange={handleViewChange}
+            size="small"
+            sx={{
+              background: (t) =>
+                t.palette.mode === "dark"
+                  ? "rgba(255,255,255,0.05)"
+                  : "rgba(0,0,0,0.05)",
+              borderRadius: 2,
+              padding: 0.5,
+              "& .MuiToggleButton-root": {
+                color: (t) => t.palette.text.secondary,
+                border: "none",
+                borderRadius: "8px !important",
+                px: 2,
+                py: 1,
+                "&.Mui-selected": {
+                  background: "#00e5ff",
+                  color: (t) => (t.palette.mode === "dark" ? "#000" : "#fff"),
+                  "&:hover": {
+                    background: "#00bcd4",
+                  },
+                },
+                "&:hover": {
+                  background: (t) => t.palette.action.hover,
+                },
+              },
+            }}
+          >
+            <ToggleButton value="grid" aria-label="grid view">
+              <Grid size={16} />
+            </ToggleButton>
+            <ToggleButton value="list" aria-label="list view">
+              <List size={16} />
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Controls>
+      </HeaderRow>
+
+      <CardsWrapper view={view}>
         {audioTracks.map((track) => (
           <StyledCard
             key={track.id}
+            view={view}
             onClick={() => handleTrackClick(track)}
-            sx={{ cursor: "pointer" }}
           >
-            <Box sx={{ position: "relative" }}>
+            <AudioContainer view={view}>
               <CardMedia
                 component="img"
-                height="180"
+                height={view === "list" ? 120 : 180}
                 image={track.thumbnail}
                 alt={track.title}
                 onError={handleImageError}
               />
+              <OverlayGradient />
               <StyledChip label={track.category} color="primary" />
               <PlayButton aria-label="play" size="large">
                 <Play size={22} />
               </PlayButton>
-            </Box>
-            <CardContent sx={{ textAlign: "left" }}>
-              <Typography variant="h6" fontWeight={600}>
-                {track.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {track.author}
+            </AudioContainer>
+            <CardContent
+              sx={{
+                textAlign: "left",
+                flex: view === "list" ? 1 : undefined,
+                p: view === "list" ? 2 : undefined,
+              }}
+            >
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="start"
+              >
+                <Box>
+                  <Typography variant="subtitle1" fontWeight={600} noWrap>
+                    {track.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {track.author} • {new Date(track.date).toLocaleDateString()}
+                  </Typography>
+                </Box>
+                <Box>
+                  <IconButton size="small" aria-label="like audio">
+                    <Heart size={16} />
+                  </IconButton>
+                  <IconButton size="small" aria-label="download audio">
+                    <DownloadCloud size={16} />
+                  </IconButton>
+                </Box>
+              </Box>
+
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ mt: 1 }}
+                noWrap
+              >
+                {track.description}
               </Typography>
 
-              <PlayInfo>
+              <ActionsRow>
                 <Box display="flex" alignItems="center" gap={0.5}>
                   <Clock size={16} />
                   <Typography variant="body2" color="text.secondary">
                     {track.duration}
                   </Typography>
                 </Box>
-                <Typography color="success.main" fontWeight={600}>
+                <Typography color="#00c4d6" fontWeight={600}>
                   {track.listeners} listeners
                 </Typography>
-              </PlayInfo>
+              </ActionsRow>
             </CardContent>
           </StyledCard>
         ))}
