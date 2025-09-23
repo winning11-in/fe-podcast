@@ -31,7 +31,19 @@ const audioTracks: AudioTrack[] = [
     category: "Web Security",
     audioUrl:
       "https://res.cloudinary.com/dgvoocfla/video/upload/v1758559504/CORS_%E0%A4%95%E0%A5%8D%E0%A4%AF%E0%A4%BE_%E0%A4%B9%E0%A5%88__%E0%A4%95%E0%A5%8D%E0%A4%AF%E0%A5%8B%E0%A4%82_%E0%A5%9B%E0%A4%B0%E0%A5%82%E0%A4%B0%E0%A5%80_%E0%A4%B9%E0%A5%88__%E0%A5%9B%E0%A5%80%E0%A4%B0%E0%A5%8B_%E0%A4%B8%E0%A5%87_%E0%A4%8F%E0%A4%A1%E0%A4%B5%E0%A4%BE%E0%A4%82%E0%A4%B8_%E0%A4%A4%E0%A4%95__%E0%A4%B5%E0%A5%87%E0%A4%AC_%E0%A4%B8%E0%A4%BF%E0%A4%95%E0%A5%8D%E0%A4%AF%E0%A5%8B%E0%A4%B0%E0%A4%BF%E0%A4%9F%E0%A5%80_vqfxlu.mp4",
-  } 
+  },
+  {
+    id: "3",
+    title: "Machine Learning Basics",
+    author: "Sarah Chen",
+    description: "Introduction to machine learning fundamentals and basic concepts.",
+    duration: "3:30",
+    listeners: "15.2K",
+    date: "2024-09-22",
+    thumbnail: "/assets/ml.png",
+    category: "AI/ML",
+    audioUrl: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
+  }, 
 ];
 
 export class AudioTrackService {

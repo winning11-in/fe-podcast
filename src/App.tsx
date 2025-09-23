@@ -5,12 +5,12 @@ import { CssBaseline, useMediaQuery } from "@mui/material";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import { useState } from "react";
-import Home from "./components/Home";
 import AudioLibrary from "./components/AudioLibrary";
 import VideoLibrary from "./components/VideoLibrary";
 import AudioPlayer from "./components/player/AudioPlayer";
 import VideoPlayer from "./components/player/VideoPlayer";
 import { useThemeContext } from "./hooks/useThemeContext";
+import NeuralNetworksHero from "./components/Home";
 
 function App() {
   const location = useLocation();
@@ -105,7 +105,7 @@ function App() {
             <div style={mainAreaStyle}>
               <main style={contentStyle}>
                 <Routes>
-                  <Route path="/" element={<Home />} />
+                  <Route path="/" element={<NeuralNetworksHero />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/audio-library" element={<AudioLibrary />} />
                   <Route path="/video-library" element={<VideoLibrary />} />
