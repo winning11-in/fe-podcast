@@ -1,18 +1,93 @@
 import React from "react";
-import { Box, Button, Typography, Card, CardContent } from "@mui/material";
+import { Box, Button, Typography, Card, CardContent, IconButton } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Star, Clock, Eye, Star as StarIcon, Play, Pause } from "lucide-react";
+import { Star, Clock, Eye, Star as StarIcon, Play, Pause, X } from "lucide-react";
 import TrendingNow from "./NewTrendSection";
 
 export default function NeuralNetworksHero() {
   const theme = useTheme();
   const [isPlaying, setIsPlaying] = React.useState(false);
+  const [showBanner, setShowBanner] = React.useState(true);
+
+  React.useEffect(() => {
+    const bannerClosed = localStorage.getItem('welcomeBannerClosed');
+    if (bannerClosed === 'true') {
+      setShowBanner(false);
+    }
+  }, []);
 
   const handleStartListening = () => {
     setIsPlaying(!isPlaying);
   };
+
+  const handleCloseBanner = () => {
+    setShowBanner(false);
+    localStorage.setItem('welcomeBannerClosed', 'true');
+  };
   return (
     <>
+      {/* Welcome Banner */}
+      {showBanner && (
+        <Box
+          sx={{
+            position: 'relative',
+            textAlign: 'center',
+            py: { xs: 2, md: 3 },
+            px: { xs: 2, md: 0 },
+            mb: { xs: 3, md: 4 },
+            // mx: { xs: 2, md: 0 },
+            background: theme.palette.mode === 'dark'
+              ? 'linear-gradient(135deg, rgba(0,229,255,0.1), rgba(255,152,0,0.1))'
+              : 'linear-gradient(135deg, rgba(0,229,255,0.05), rgba(255,152,0,0.05))',
+            borderRadius: '12px',
+            border: `1px solid ${theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'}`,
+          }}
+        >
+          <IconButton
+            onClick={handleCloseBanner}
+            sx={{
+              position: 'absolute',
+              top: { xs: -8, md: -10 },
+              right: { xs: -8, md: -10 },
+              color: 'text.secondary',
+              borderRadius: '50%',
+              width: { xs: 28, md: 32 },
+              height: { xs: 28, md: 32 },
+              backdropFilter: 'blur(4px)',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              '&:hover': {
+                color: 'text.primary',
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+              },
+            }}
+          >
+            <X size={20} />
+          </IconButton>
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            sx={{
+              fontSize: { xs: '1.5rem', md: '2.125rem' },
+              background: 'linear-gradient(90deg, #00e5ff, #ff9800)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              mb: 1,
+            }}
+          >
+            Welcome to Funnel
+          </Typography>
+          <Typography 
+            variant="body1" 
+            color="text.secondary"
+            sx={{
+              fontSize: { xs: '0.875rem', md: '1rem' },
+            }}
+          >
+            Discover the latest in Frontend Development through our curated audio content
+          </Typography>
+        </Box>
+      )}
+
       <Box sx={{ mb: { xs: 4, md: 8 } }}>
         <Box
           sx={{
