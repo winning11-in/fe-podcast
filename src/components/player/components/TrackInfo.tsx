@@ -12,7 +12,7 @@ export const TrackInfo: React.FC<TrackInfoProps> = ({
 }) => {
   return (
     <div className={`track-details ${className}`}>
-      <h1 className="track-title">{track.title}</h1>
+      <h1 className="track-title">{track?.title}</h1>
     </div>
   );
 };
@@ -24,7 +24,7 @@ interface MobileTrackInfoProps {
 export const MobileTrackInfo: React.FC<MobileTrackInfoProps> = ({ track }) => {
   return (
     <div className="mobile-track-info">
-      <h2 className="mobile-track-title">{track.title}</h2>
+      <h2 className="mobile-track-title">{track?.title}</h2>
     </div>
   );
 };
