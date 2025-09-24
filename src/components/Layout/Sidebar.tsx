@@ -215,6 +215,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <StyledListItemButton
                   $active={isActive}
                   $isDarkMode={isDarkMode}
+                  onClick={isMobile ? () => setDrawerOpen?.(false) : undefined}
                   sx={{
                     display: "flex",
                     alignItems: "center",
