@@ -4,12 +4,17 @@ import Header from "./components/Layout/Header";
 import { CssBaseline, useMediaQuery } from "@mui/material";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AudioLibrary from "./components/AudioLibrary";
 import VideoLibrary from "./components/VideoLibrary";
 import AudioPlayer from "./components/player/AudioPlayer";
 import VideoPlayer from "./components/player/VideoPlayer";
+import MiniAudioPlayer from "./components/player/components/MiniAudioPlayer";
 import { useThemeContext } from "./hooks/useThemeContext";
+import { useAppDispatch } from "./store/hooks";
+import { setShowMiniPlayer } from "./store/audioSlice";
+import { useGlobalAudioPlayer } from "./hooks/useGlobalAudioPlayer";
+import { useAppSelector } from "./store/hooks";
 import NeuralNetworksHero from "./components/Home";
 
 function App() {
@@ -18,8 +23,22 @@ function App() {
   const isMobile = useMediaQuery("(max-width:639px)");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { isDarkMode } = useThemeContext();
+  const dispatch = useAppDispatch();
+  const { currentTrack } = useAppSelector((state) => state.audio);
+
+  // Initialize global audio player
+  useGlobalAudioPlayer();
 
   const isPlayerPage = location.pathname.startsWith("/audio-player") || location.pathname.startsWith("/video-player");
+
+  // Hide mini player when on player pages, show when leaving if there's a current track
+  useEffect(() => {
+    if (isPlayerPage) {
+      dispatch(setShowMiniPlayer(false));
+    } else if (currentTrack) {
+      dispatch(setShowMiniPlayer(true));
+    }
+  }, [isPlayerPage, dispatch, currentTrack]);
 
   const rootStyle: React.CSSProperties = {
     fontFamily: "'Roboto', sans-serif",
@@ -116,6 +135,9 @@ function App() {
             </div>
           </div>
         </div>
+
+        {/* Mini Audio Player */}
+        <MiniAudioPlayer />
       </div>
     </>
   );

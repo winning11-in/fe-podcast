@@ -1,8 +1,15 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useAudioPlayer } from "./hooks/useAudioPlayer";
+import { useAppSelector, useAppDispatch } from "../../store/hooks";
 import { AudioTrackService } from "./services/audioTrackService";
 import type { AudioTrack } from "./types";
+import {
+  setCurrentTrack,
+  setPlaying,
+  setCurrentTime,
+  setShowMiniPlayer,
+  setMuted,
+} from "../../store/audioSlice";
 
 // Lazy load components for better performance
 const TopNavigation = React.lazy(() =>
@@ -29,28 +36,34 @@ import "./AudioPlayer.css";
 const AudioPlayer: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [track, setTrack] = useState<AudioTrack | undefined>(undefined);
   const [trackError, setTrackError] = useState<string | null>(null);
   const [isLoadingTrack, setIsLoadingTrack] = useState<boolean>(true);
 
-  const {
-    audioRef,
-    state,
-    actions: {
-      togglePlayPause,
-      handleSeek,
-      toggleMute,
-      skipForward,
-      skipBackward,
-    },
-    utils: { formatTime },
-  } = useAudioPlayer({ track });
+  const { isPlaying, currentTime, duration, volume, isMuted, isLoading, buffered, currentTrack } = useAppSelector(
+    (state) => state.audio
+  );
+
+  const formatTime = (time: number): string => {
+    if (!isFinite(time)) return "0:00";
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
 
   // Load track data
   useEffect(() => {
     const loadTrack = async () => {
       if (!id) {
         setTrackError("No track ID provided");
+        setIsLoadingTrack(false);
+        return;
+      }
+
+      // If currentTrack is already loaded and matches the ID, use it directly
+      if (currentTrack && currentTrack.id === id) {
+        setTrack(currentTrack);
         setIsLoadingTrack(false);
         return;
       }
@@ -88,6 +101,7 @@ const AudioPlayer: React.FC = () => {
         }
 
         setTrack(foundTrack);
+        dispatch(setCurrentTrack(foundTrack));
         setIsLoadingTrack(false);
       } catch (error) {
         console.error("Failed to load track:", error);
@@ -97,9 +111,32 @@ const AudioPlayer: React.FC = () => {
     };
 
     loadTrack();
-  }, [id]);
+  }, [id, dispatch, currentTrack]);
+
+  const handleSeek = (time: number) => {
+    dispatch(setCurrentTime(time));
+  };
+
+  const togglePlayPause = () => {
+    dispatch(setPlaying(!isPlaying));
+  };
+
+  const skipForward = () => {
+    const newTime = Math.min(currentTime + 15, duration);
+    dispatch(setCurrentTime(newTime));
+  };
+
+  const skipBackward = () => {
+    const newTime = Math.max(currentTime - 15, 0);
+    dispatch(setCurrentTime(newTime));
+  };
+
+  const toggleMute = () => {
+    dispatch(setMuted(!isMuted));
+  };
 
   const handleBack = () => {
+    dispatch(setShowMiniPlayer(true));
     navigate(-1);
   };
 
@@ -150,13 +187,6 @@ const AudioPlayer: React.FC = () => {
         }}
       ></div>
 
-      <audio
-        ref={audioRef}
-        src={track.audioUrl}
-        preload="metadata"
-        crossOrigin="anonymous"
-      />
-
       <Suspense fallback={<div>Loading navigation...</div>}>
         <TopNavigation onBack={handleBack} track={track} />
       </Suspense>
@@ -172,10 +202,10 @@ const AudioPlayer: React.FC = () => {
       <div className="bottom-controls">
         <Suspense fallback={<div>Loading progress...</div>}>
           <ProgressBar
-            currentTime={state.currentTime}
-            duration={state.duration}
-            buffered={state.buffered}
-            isLoading={state.isLoading}
+            currentTime={currentTime}
+            duration={duration}
+            buffered={buffered}
+            isLoading={isLoading}
             onSeek={handleSeek}
             formatTime={formatTime}
           />
@@ -183,17 +213,25 @@ const AudioPlayer: React.FC = () => {
 
         <Suspense fallback={<div>Loading controls...</div>}>
           <ControlPanel
-            state={state}
+            state={{
+              isPlaying,
+              currentTime,
+              duration,
+              volume,
+              isMuted,
+              isLoading,
+              buffered,
+            }}
             onTogglePlayPause={togglePlayPause}
             onSkipBackward={skipBackward}
             onSkipForward={skipForward}
             onToggleMute={toggleMute}
-            disabled={state.isLoading || !track.audioUrl}
+            disabled={isLoading || !track?.audioUrl}
           />
         </Suspense>
       </div>
 
-      {state.isLoading && (
+      {isLoading && (
         <div className="audio-loading-overlay">
           <div className="audio-loading-content">
             <div className="loading-spinner"></div>
