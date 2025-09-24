@@ -1,13 +1,35 @@
 /* Full Screen Audio Player */
 
-/* Ensure no spacing issues on mobile */
-html,
-body {
+/* Ensure no scrolling on mobile */
+html, body {
+  overflow: hidden;
+  height: 100%;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
+/* iOS Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .fullscreen-audio-player {
+    height: -webkit-fill-available;
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Prevent zoom on input focus on iOS */
+@media screen and (max-width: 768px) {
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
 .fullscreen-audio-player {
   position: fixed;
   top: 0;
@@ -19,6 +41,14 @@ body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   margin: 0;
   padding: 0;
+  /* Safe area insets for mobile browsers */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  /* Prevent overscroll */
+  overscroll-behavior: none;
+  touch-action: none;
 }
 
 /* Background Image */
@@ -56,6 +86,8 @@ body {
   z-index: 10;
   display: flex;
   align-items: center;
+  /* Account for top safe area */
+  top: calc(32px + env(safe-area-inset-top));
 }
 
 .back-btn {
@@ -125,6 +157,10 @@ body {
   justify-content: flex-start;
   padding: 120px 20px 40px;
   gap: 40px;
+  /* Account for safe areas */
+  padding-top: calc(120px + env(safe-area-inset-top));
+  padding-left: calc(20px + env(safe-area-inset-left));
+  padding-right: calc(20px + env(safe-area-inset-right));
 }
 
 /* Full Width Album Art */
@@ -256,6 +292,11 @@ body {
   padding: 40px 48px 32px;
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
   margin: 0;
+  /* Account for safe areas */
+  bottom: env(safe-area-inset-bottom);
+  left: env(safe-area-inset-left);
+  right: env(safe-area-inset-right);
+  padding-bottom: calc(32px + env(safe-area-inset-bottom));
 }
 
 /* Progress Bar */
@@ -807,6 +848,9 @@ body {
 @media (max-width: 640px) {
   .content-overlay {
     padding: 80px 16px 20px;
+    padding-top: calc(80px + env(safe-area-inset-top));
+    padding-left: calc(16px + env(safe-area-inset-left));
+    padding-right: calc(16px + env(safe-area-inset-right));
     gap: 20px;
   }
 
@@ -1419,13 +1463,16 @@ body {
   }
 
   .top-navigation {
-    top: 20px;
-    left: 20px;
+    top: calc(20px + env(safe-area-inset-top));
+    left: calc(20px + env(safe-area-inset-left));
   }
 
   .content-overlay {
     flex-direction: column;
     padding: 80px 20px 140px 20px;
+    padding-top: calc(80px + env(safe-area-inset-top));
+    padding-left: calc(20px + env(safe-area-inset-left));
+    padding-right: calc(20px + env(safe-area-inset-right));
     gap: 20px;
     align-items: center;
     justify-content: center;
@@ -1533,12 +1580,15 @@ body {
   }
 
   .top-navigation {
-    top: 30px;
-    left: 15px;
+    top: calc(30px + env(safe-area-inset-top));
+    left: calc(15px + env(safe-area-inset-left));
   }
 
   .content-overlay {
     padding: 70px 15px 120px 15px;
+    padding-top: calc(70px + env(safe-area-inset-top));
+    padding-left: calc(15px + env(safe-area-inset-left));
+    padding-right: calc(15px + env(safe-area-inset-right));
     gap: 15px;
     align-items: center;
     justify-content: center;
