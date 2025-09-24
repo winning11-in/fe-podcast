@@ -118,6 +118,21 @@ const AudioLibrary = () => {
       audioUrl:
         "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3",
     },
+    {
+      id: "4",
+      title: "Vector Databases Explained",
+      author: "Sarah Chen",
+      description:
+        "Introduction to vector databases and their applications in AI.",
+      duration: "4:15",
+      listeners: "12.8K",
+      date: "2024-09-22",
+      thumbnail:
+        "https://res.cloudinary.com/dj3xx136b/image/upload/v1758615175/txikr2f46omistu5f0rq.png",
+      category: "DB",
+      audioUrl:
+        "https://res.cloudinary.com/dgvoocfla/video/upload/v1758732667/%E0%A4%B5%E0%A5%87%E0%A4%95%E0%A5%8D%E0%A4%9F%E0%A4%B0_%E0%A4%A1%E0%A5%87%E0%A4%9F%E0%A4%BE%E0%A4%AC%E0%A5%87%E0%A4%B8_%E0%A4%94%E0%A4%B0_RAG__AI_%E0%A4%B5_LLM_%E0%A4%95%E0%A5%8B_%E0%A4%AC%E0%A4%BE%E0%A4%B9%E0%A4%B0%E0%A5%80_%E0%A4%9C%E0%A5%8D%E0%A4%9E%E0%A4%BE%E0%A4%A8_%E0%A4%B8%E0%A5%87_%E0%A4%9C%E0%A5%8B%E0%A4%A1%E0%A4%BC%E0%A4%A8%E0%A5%87_%E0%A4%B5%E0%A4%BE%E0%A4%B2%E0%A5%80_%E0%A4%97_uhpz35.mp4",
+    },
   ];
 
   const handleTrackClick = (track: AudioTrack) => {
@@ -226,7 +241,7 @@ const AudioLibrary = () => {
                 image={track.thumbnail}
                 alt={track.title}
                 onError={handleImageError}
-                sx={{ filter: 'blur(3px)' }}
+                sx={{ filter: "blur(3px)" }}
               />
               <OverlayGradient />
               <StyledChip label={track.category} color="primary" />
