@@ -1,14 +1,5 @@
 /* Full Screen Audio Player */
 
-/* Ensure no scrolling on mobile */
-html, body {
-  overflow: hidden;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  -webkit-overflow-scrolling: touch;
-}
-
 /* iOS Safari specific fixes */
 @supports (-webkit-touch-callout: none) {
   .fullscreen-audio-player {
