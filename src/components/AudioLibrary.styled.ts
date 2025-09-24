@@ -17,6 +17,10 @@ export const CardsWrapper = styled(Box)<{ view?: "grid" | "list" }>(({ theme, vi
   flexDirection: view === "list" ? "column" : undefined,
   gridTemplateColumns: view === "grid" ? "repeat(auto-fit, minmax(300px, 1fr))" : undefined,
   gap: theme.spacing(view === "list" ? 2 : 3),
+  [theme.breakpoints.down("sm")]: {
+    gridTemplateColumns: view === "grid" ? "1fr" : undefined,
+    gap: theme.spacing(view === "list" ? 1 : 2),
+  },
 }));
 
 export const StyledCard = styled(Card)<{ view?: "grid" | "list" }>(({ theme, view = "grid" }) => ({
@@ -29,6 +33,9 @@ export const StyledCard = styled(Card)<{ view?: "grid" | "list" }>(({ theme, vie
   justifyContent: "space-between",
   background: "linear-gradient(135deg, rgba(0,229,255,0.05), rgba(255,152,0,0.05))",
   cursor: "pointer",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+  },
 }));
 
 export const AudioContainer = styled(Box)<{ view?: "grid" | "list" }>(({ theme, view = "grid" }) => ({
@@ -38,6 +45,10 @@ export const AudioContainer = styled(Box)<{ view?: "grid" | "list" }>(({ theme, 
   overflow: "hidden",
   background: theme.palette.action.hover,
   flexShrink: 0,
+  [theme.breakpoints.down("sm")]: {
+    width: view === "list" ? 120 : "100%",
+    height: view === "list" ? 80 : 140,
+  },
 }));
 
 export const OverlayGradient = styled(Box)(() => ({
@@ -84,6 +95,11 @@ export const HeaderRow = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   gap: theme.spacing(2),
   marginBottom: theme.spacing(2),
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+    alignItems: "stretch",
+    gap: theme.spacing(1),
+  },
 }));
 
 export const Controls = styled(Box)(({ theme }) => ({
@@ -98,6 +114,9 @@ export const SearchInput = styled(InputBase)(({ theme }) => ({
   borderRadius: 8,
   border: `1px solid #00e5ff`,
   width: 360,
+  [theme.breakpoints.down("md")]: {
+    width: "100%",
+  },
   '&:hover': {
     borderColor: '#00bcd4',
   },
@@ -107,8 +126,11 @@ export const SearchInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const ContentHeader = styled(Box)(() => ({
+export const ContentHeader = styled(Box)(({ theme }) => ({
   marginBottom: "2rem",
+  [theme.breakpoints.down("sm")]: {
+    marginBottom: "1rem",
+  },
 }));
 
 export const ContentTitle = styled("h4")<{ isDarkMode?: boolean }>(({ isDarkMode }) => ({

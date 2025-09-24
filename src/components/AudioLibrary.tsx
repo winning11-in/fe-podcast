@@ -1,6 +1,8 @@
 import React from "react";
 import { Play, Clock, Grid, List, Heart, DownloadCloud } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
+import { useMediaQuery } from "@mui/material";
 import {
   Box,
   Typography,
@@ -45,7 +47,16 @@ interface AudioTrack {
 const AudioLibrary = () => {
   const navigate = useNavigate();
   const { isDarkMode } = useThemeContext();
+  const theme = useTheme();
   const [view, setView] = React.useState<"grid" | "list">("grid");
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const iconSize = isMobile ? 18 : 16;
+
+  React.useEffect(() => {
+    if (isMobile && view !== "grid") {
+      setView("grid");
+    }
+  }, [isMobile, view]);
 
   const handleViewChange = (
     _event: React.MouseEvent<HTMLElement>,
@@ -150,6 +161,9 @@ const AudioLibrary = () => {
             background: "linear-gradient(90deg,#00e5ff,#ff9800)",
             WebkitBackgroundClip: isDarkMode ? "text" : "initial",
             WebkitTextFillColor: isDarkMode ? "transparent" : "initial",
+            [theme.breakpoints.down("sm")]: {
+              fontSize: "1.5rem",
+            },
           }}
         >
           Audio Library
@@ -185,7 +199,13 @@ const AudioLibrary = () => {
           </Select>
         </Controls>
 
-        <Controls>
+        <Controls
+          sx={{
+            [theme.breakpoints.down("md")]: {
+              display: "none",
+            },
+          }}
+        >
           <ToggleButtonGroup
             value={view}
             exclusive
@@ -254,6 +274,9 @@ const AudioLibrary = () => {
                 textAlign: "left",
                 flex: view === "list" ? 1 : undefined,
                 p: view === "list" ? 2 : undefined,
+                [theme.breakpoints.down("sm")]: {
+                  p: view === "list" ? 1 : undefined,
+                },
               }}
             >
               <Box
@@ -262,19 +285,35 @@ const AudioLibrary = () => {
                 alignItems="start"
               >
                 <Box>
-                  <Typography variant="subtitle1" fontWeight={600} noWrap>
+                  <Typography variant="subtitle1" fontWeight={600}
+                    sx={{
+                      [theme.breakpoints.down("sm")]: {
+                        fontSize: "0.9rem",
+                        whiteSpace: "normal",
+                        overflow: "visible",
+                        textOverflow: "clip",
+                      },
+                    }}
+                    noWrap
+                  >
                     {track.title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary"
+                    sx={{
+                      [theme.breakpoints.down("sm")]: {
+                        fontSize: "0.75rem",
+                      },
+                    }}
+                  >
                     {track.author} • {new Date(track.date).toLocaleDateString()}
                   </Typography>
                 </Box>
                 <Box>
                   <IconButton size="small" aria-label="like audio">
-                    <Heart size={16} />
+                    <Heart size={iconSize} />
                   </IconButton>
                   <IconButton size="small" aria-label="download audio">
-                    <DownloadCloud size={16} />
+                    <DownloadCloud size={iconSize} />
                   </IconButton>
                 </Box>
               </Box>
@@ -282,7 +321,14 @@ const AudioLibrary = () => {
               <Typography
                 variant="body2"
                 color="text.secondary"
-                sx={{ mt: 1 }}
+                sx={{
+                  mt: 1,
+                  [theme.breakpoints.down("sm")]: {
+                    whiteSpace: "normal",
+                    overflow: "visible",
+                    textOverflow: "clip",
+                  },
+                }}
                 noWrap
               >
                 {track.description}
@@ -291,11 +337,23 @@ const AudioLibrary = () => {
               <ActionsRow>
                 <Box display="flex" alignItems="center" gap={0.5}>
                   <Clock size={16} />
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary"
+                    sx={{
+                      [theme.breakpoints.down("sm")]: {
+                        fontSize: "0.75rem",
+                      },
+                    }}
+                  >
                     {track.duration}
                   </Typography>
                 </Box>
-                <Typography color="#00c4d6" fontWeight={600}>
+                <Typography color="#00c4d6" fontWeight={600}
+                  sx={{
+                    [theme.breakpoints.down("sm")]: {
+                      fontSize: "0.75rem",
+                    },
+                  }}
+                >
                   {track.listeners} listeners
                 </Typography>
               </ActionsRow>
