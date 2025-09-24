@@ -17,6 +17,10 @@ export const CardsWrapper = styled(Box)<{ view?: "grid" | "list" }>(({ theme, vi
   flexDirection: view === "list" ? "column" : undefined,
   gridTemplateColumns: view === "grid" ? "repeat(auto-fit, minmax(300px, 1fr))" : undefined,
   gap: theme.spacing(3),
+  [theme.breakpoints.down("sm")]: {
+    gridTemplateColumns: view === "grid" ? "1fr" : undefined,
+    gap: theme.spacing(2),
+  },
 }));
 
 export const StyledCard = styled(Card)<{ view?: "grid" | "list" }>(({ theme, view = "grid" }) => ({
@@ -28,6 +32,9 @@ export const StyledCard = styled(Card)<{ view?: "grid" | "list" }>(({ theme, vie
   width: view === "list" ? "100%" : undefined,
   justifyContent: "space-between",
   background: "linear-gradient(135deg, rgba(0,229,255,0.05), rgba(255,152,0,0.05))",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+  },
 }));
 
 export const StyledChip = styled(Chip)(({ theme }) => ({
@@ -49,6 +56,10 @@ export const VideoContainer = styled(Box)<{ view?: "grid" | "list" }>(({ theme, 
   overflow: "hidden",
   background: theme.palette.action.hover,
   flexShrink: 0,
+  [theme.breakpoints.down("sm")]: {
+    width: view === "list" ? 120 : "100%",
+    height: view === "list" ? 80 : 140,
+  },
 }));
 
 export const ThumbnailImage = styled('img')(() => ({
@@ -110,6 +121,11 @@ export const HeaderRow = styled(Box)(({ theme }) => ({
   justifyContent: "space-between",
   gap: theme.spacing(2),
   marginBottom: theme.spacing(2),
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+    alignItems: "stretch",
+    gap: theme.spacing(1),
+  },
 }));
 
 export const Controls = styled(Box)(({ theme }) => ({
@@ -130,5 +146,8 @@ export const SearchInput = styled(InputBase)(({ theme }) => ({
   '&.Mui-focused': {
     borderColor: '#00e5ff',
     boxShadow: '0 0 0 2px rgba(0,229,255,0.2)',
+  },
+  [theme.breakpoints.down("md")]: {
+    width: "100%",
   },
 }));

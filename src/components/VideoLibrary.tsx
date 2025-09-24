@@ -9,6 +9,8 @@ import {
   MenuItem,
   ToggleButton,
   ToggleButtonGroup,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { ContentHeader } from "./AudioLibrary.styles";
 import { useNavigate } from "react-router-dom";
@@ -45,6 +47,15 @@ const VideoLibrary = () => {
   const navigate = useNavigate();
   const [view, setView] = React.useState<"grid" | "list">("grid");
   const { isDarkMode } = useThemeContext();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const iconSize = isMobile ? 18 : 16;
+
+  React.useEffect(() => {
+    if (window.innerWidth <= theme.breakpoints.values.md && view !== "grid") {
+      setView("grid");
+    }
+  }, [theme.breakpoints.values.md, view]);
 
   const handleViewChange = (
     _event: React.MouseEvent<HTMLElement>,
@@ -107,6 +118,9 @@ const VideoLibrary = () => {
               WebkitTextFillColor: isDarkMode ? "transparent" : "initial",
               color: isDarkMode ? "transparent" : "#333",
               fontWeight: "bold",
+              [theme.breakpoints.down("sm")]: {
+                fontSize: "1.5rem",
+              },
             }}
           >
             {"Video Library"}
@@ -143,7 +157,13 @@ const VideoLibrary = () => {
           </Select>
         </Controls>
 
-        <Controls>
+        <Controls
+          sx={{
+            [theme.breakpoints.down("md")]: {
+              display: "none",
+            },
+          }}
+        >
           <ToggleButtonGroup
             value={view}
             exclusive
@@ -212,6 +232,9 @@ const VideoLibrary = () => {
                 textAlign: "left",
                 flex: view === "list" ? 1 : undefined,
                 p: view === "list" ? 2 : undefined,
+                [theme.breakpoints.down("sm")]: {
+                  p: 1,
+                },
               }}
             >
               <Box
@@ -220,27 +243,50 @@ const VideoLibrary = () => {
                 alignItems="start"
               >
                 <Box>
-                  <Typography variant="subtitle1" fontWeight={600} noWrap>
+                  <Typography variant="subtitle1" fontWeight={600} noWrap
+                    sx={{
+                      [theme.breakpoints.down("sm")]: {
+                        fontSize: "0.9rem",
+                        whiteSpace: "normal",
+                        overflow: "visible",
+                        textOverflow: "clip",
+                      },
+                    }}
+                  >
                     {video.title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary"
+                    sx={{
+                      [theme.breakpoints.down("sm")]: {
+                        fontSize: "0.75rem",
+                      },
+                    }}
+                  >
                     {video.author} • {new Date(video.date).toLocaleDateString()}
                   </Typography>
                 </Box>
                 <Box>
                   <IconButton size="small" aria-label="like video">
-                    <Heart size={16} />
+                    <Heart size={iconSize} />
                   </IconButton>
                   <IconButton size="small" aria-label="download video">
-                    <DownloadCloud size={16} />
+                    <DownloadCloud size={iconSize} />
                   </IconButton>
                 </Box>
               </Box>
 
               <Typography
                 variant="body2"
-                color="text.secondary"
-                sx={{ mt: 1 }}
+                sx={{
+                  mt: 1,
+                  color: "text.secondary",
+                  [theme.breakpoints.down("sm")]: {
+                    whiteSpace: "normal",
+                    overflow: "visible",
+                    textOverflow: "clip",
+                    fontSize: "0.75rem",
+                  },
+                }}
                 noWrap
               >
                 {video.description}
@@ -249,11 +295,23 @@ const VideoLibrary = () => {
               <ActionsRow>
                 <Box display="flex" alignItems="center" gap={0.5}>
                   <Clock size={16} />
-                  <Typography variant="body2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary"
+                    sx={{
+                      [theme.breakpoints.down("sm")]: {
+                        fontSize: "0.75rem",
+                      },
+                    }}
+                  >
                     {video.duration}
                   </Typography>
                 </Box>
-                <Typography color="#00c4d6" fontWeight={600}>
+                <Typography color="#00c4d6" fontWeight={600}
+                  sx={{
+                    [theme.breakpoints.down("sm")]: {
+                      fontSize: "0.75rem",
+                    },
+                  }}
+                >
                   {video.views} views
                 </Typography>
               </ActionsRow>

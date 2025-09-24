@@ -122,6 +122,9 @@ export const SearchInput = styled(TextField)(({ theme }) => ({
 
 export const ContentHeader = styled(Box)(({ theme }) => ({
   marginBottom: theme.spacing(4),
+  [theme.breakpoints.down("sm")]: {
+    marginBottom: theme.spacing(2),
+  },
 }));
 
 export const ContentTitle = styled(Typography)(({ theme }) => ({

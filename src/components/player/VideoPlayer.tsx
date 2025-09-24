@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Box, Typography, IconButton, CircularProgress } from "@mui/material";
+import { Box, Typography, IconButton, CircularProgress, useTheme } from "@mui/material";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { styled } from "@mui/material/styles";
 
@@ -61,7 +61,7 @@ const PlayerContainer = styled(Box)(() => ({
   flexDirection: "column",
 }));
 
-const Header = styled(Box)(() => ({
+const Header = styled(Box)(({ theme }) => ({
   position: "fixed",
   top: 0,
   left: 0,
@@ -72,22 +72,32 @@ const Header = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
   gap: "16px",
+  [theme.breakpoints.down("sm")]: {
+    padding: "12px 16px",
+    gap: "12px",
+  },
 }));
 
-const BackButton = styled(IconButton)(() => ({
+const BackButton = styled(IconButton)(({ theme }) => ({
   color: "#fff",
   backgroundColor: "rgba(255,255,255,0.1)",
   "&:hover": {
     backgroundColor: "rgba(255,255,255,0.2)",
   },
+  [theme.breakpoints.down("sm")]: {
+    padding: theme.spacing(1),
+  },
 }));
 
-const VideoContainer = styled(Box)(() => ({
+const VideoContainer = styled(Box)(({ theme }) => ({
   flex: 1,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   padding: "80px 24px 120px 24px", // Account for header and footer
+  [theme.breakpoints.down("sm")]: {
+    padding: "60px 16px 100px 16px",
+  },
 }));
 
 const VideoFrame = styled(Box)(() => ({
@@ -99,7 +109,7 @@ const VideoFrame = styled(Box)(() => ({
   boxShadow: "0 25px 50px rgba(0,0,0,0.5)",
 }));
 
-const Footer = styled(Box)(() => ({
+const Footer = styled(Box)(({ theme }) => ({
   position: "fixed",
   bottom: 0,
   left: 0,
@@ -107,6 +117,9 @@ const Footer = styled(Box)(() => ({
   background: "linear-gradient(0deg, rgba(0,0,0,0.9) 0%, transparent 100%)",
   padding: "24px",
   zIndex: 1000,
+  [theme.breakpoints.down("sm")]: {
+    padding: "16px",
+  },
 }));
 
 const VideoInfo = styled(Box)(() => ({
@@ -126,6 +139,7 @@ const LoadingContainer = styled(Box)(() => ({
 const VideoPlayer: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const theme = useTheme();
   const [video, setVideo] = useState<VideoItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -176,7 +190,12 @@ const VideoPlayer: React.FC = () => {
     return (
       <LoadingContainer>
         <CircularProgress size={60} sx={{ color: "#fff" }} />
-        <Typography variant="h6" sx={{ color: "#fff" }}>
+        <Typography variant="h6" sx={{
+          color: "#fff",
+          [theme.breakpoints.down("sm")]: {
+            fontSize: "1rem",
+          },
+        }}>
           Loading video...
         </Typography>
       </LoadingContainer>
@@ -190,7 +209,15 @@ const VideoPlayer: React.FC = () => {
           <BackButton onClick={handleBack}>
             <ArrowLeft size={24} />
           </BackButton>
-          <Typography variant="h6">Video Player</Typography>
+          <Typography variant="h6"
+            sx={{
+              [theme.breakpoints.down("sm")]: {
+                fontSize: "1rem",
+              },
+            }}
+          >
+            Video Player
+          </Typography>
         </Header>
         <Box
           sx={{
@@ -202,13 +229,24 @@ const VideoPlayer: React.FC = () => {
             gap: 2,
           }}
         >
-          <Typography variant="h4" sx={{ color: "#fff", textAlign: "center" }}>
+          <Typography variant="h4" sx={{
+            color: "#fff",
+            textAlign: "center",
+            [theme.breakpoints.down("sm")]: {
+              fontSize: "1.5rem",
+            },
+          }}>
             {error || "Video not found"}
           </Typography>
-          <Typography
-            variant="body1"
-            sx={{ color: "#ccc", textAlign: "center", maxWidth: 400 }}
-          >
+          <Typography variant="body1" sx={{
+            color: "#ccc",
+            textAlign: "center",
+            maxWidth: 400,
+            [theme.breakpoints.down("sm")]: {
+              fontSize: "0.875rem",
+              px: 2,
+            },
+          }}>
             The video you're looking for doesn't exist or has been removed.
           </Typography>
         </Box>
@@ -223,10 +261,22 @@ const VideoPlayer: React.FC = () => {
           <ArrowLeft size={24} />
         </BackButton>
         <Box sx={{ flex: 1 }}>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap
+            sx={{
+              [theme.breakpoints.down("sm")]: {
+                fontSize: "1rem",
+              },
+            }}
+          >
             {video.title}
           </Typography>
-          <Typography variant="body2" sx={{ color: "#ccc", opacity: 0.8 }}>
+          <Typography variant="body2" sx={{
+            color: "#ccc",
+            opacity: 0.8,
+            [theme.breakpoints.down("sm")]: {
+              fontSize: "0.75rem",
+            },
+          }}>
             {video.author}
           </Typography>
         </Box>
@@ -261,20 +311,48 @@ const VideoPlayer: React.FC = () => {
 
       <Footer>
         <VideoInfo>
-          <Typography variant="h5" fontWeight={600} gutterBottom>
+          <Typography variant="h5" fontWeight={600} gutterBottom
+            sx={{
+              [theme.breakpoints.down("sm")]: {
+                fontSize: "1.25rem",
+              },
+            }}
+          >
             {video.title}
           </Typography>
-          <Typography variant="body1" sx={{ color: "#ccc", mb: 2 }}>
+          <Typography variant="body1" sx={{
+            color: "#ccc",
+            mb: 2,
+            [theme.breakpoints.down("sm")]: {
+              fontSize: "0.875rem",
+            },
+          }}>
             {video.author} • {video.views} views
           </Typography>
-          <Typography variant="body2" sx={{ color: "#ccc", lineHeight: 1.6 }}>
+          <Typography variant="body2" sx={{
+            color: "#ccc",
+            lineHeight: 1.6,
+            [theme.breakpoints.down("sm")]: {
+              fontSize: "0.75rem",
+            },
+          }}>
             {video.description}
           </Typography>
           <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-            <Typography variant="body2" sx={{ color: "#999" }}>
+            <Typography variant="body2" sx={{
+              color: "#999",
+              [theme.breakpoints.down("sm")]: {
+                fontSize: "0.75rem",
+              },
+            }}>
               Duration: {video.duration}
             </Typography>
-            <Typography variant="body2" sx={{ color: "#999" }}>
+            <Typography variant="body2" sx={{
+              color: "#999",
+              [theme.breakpoints.down("sm")]: {
+                fontSize: "0.75rem",
+              },
+            }}>
               Category: {video.category}
             </Typography>
           </Box>
