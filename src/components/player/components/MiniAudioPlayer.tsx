@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, IconButton, Typography, Avatar, Slider } from "@mui/material";
+import { Box, IconButton, Typography, Avatar, Slider, useMediaQuery, useTheme } from "@mui/material";
 import { Play, Pause, SkipBack, SkipForward, Maximize2, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
@@ -8,15 +8,23 @@ import {
   setCurrentTime,
   setShowMiniPlayer,
 } from "../../../store/audioSlice";
+import MobileMiniAudioPlayer from "./MobileMiniAudioPlayer";
 
 const MiniAudioPlayer: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { currentTrack, isPlaying, currentTime, duration, showMiniPlayer } =
     useAppSelector((state) => state.audio);
 
   if (!showMiniPlayer || !currentTrack) {
     return null;
+  }
+
+  // Render mobile version for small screens
+  if (isMobile) {
+    return <MobileMiniAudioPlayer />;
   }
 
   const formatTime = (time: number): string => {
@@ -104,7 +112,10 @@ const MiniAudioPlayer: React.FC = () => {
             <Maximize2 size={16} />
           </IconButton>
           <IconButton
-            onClick={() => dispatch(setShowMiniPlayer(false))}
+            onClick={() => {
+              dispatch(setPlaying(false));
+              dispatch(setShowMiniPlayer(false));
+            }}
             sx={{
               color: "rgba(255, 255, 255, 0.7)",
               borderRadius: "50%",

@@ -26,13 +26,11 @@ function App() {
   const dispatch = useAppDispatch();
   const { currentTrack } = useAppSelector((state) => state.audio);
 
-  // Initialize global audio player
-  useGlobalAudioPlayer();
+   useGlobalAudioPlayer();
 
   const isPlayerPage = location.pathname.startsWith("/audio-player") || location.pathname.startsWith("/video-player");
 
-  // Hide mini player when on player pages, show when leaving if there's a current track
-  useEffect(() => {
+   useEffect(() => {
     if (isPlayerPage) {
       dispatch(setShowMiniPlayer(false));
     } else if (currentTrack) {
