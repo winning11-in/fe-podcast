@@ -48,7 +48,7 @@ const MiniAudioPlayer: React.FC = () => {
         right: 24,
         width: 360,
         background:
-          "linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(50, 50, 50, 0.95) 100%)",
+          "linear-gradient(135deg, rgb(26, 26, 26) 0%, rgba(102, 126, 234, 0.03) 100%)",
         backdropFilter: "blur(24px)",
         borderRadius: "20px",
         border: "1px solid rgba(255, 255, 255, 0.15)",
