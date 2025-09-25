@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Box,
@@ -28,7 +27,7 @@ import {
 } from "lucide-react";
 import { useThemeContext } from "../hooks/useThemeContext";
 import { getPlaylistById, type Track } from "../utils/playlistData";
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { setCurrentTrack, setPlaying, setShowMiniPlayer } from "../store/audioSlice";
 
 const PlaylistDetail = () => {
@@ -36,7 +35,10 @@ const PlaylistDetail = () => {
   const navigate = useNavigate();
   const { isDarkMode } = useThemeContext();
   const dispatch = useAppDispatch();
-  const [currentPlaying, setCurrentPlaying] = React.useState<string | null>(null);
+  
+  // Get audio state from Redux
+  const currentTrack = useAppSelector(state => state.audio.currentTrack);
+  const isPlaying = useAppSelector(state => state.audio.isPlaying);
 
   const playlist = id ? getPlaylistById(id) : null;
 
@@ -61,11 +63,13 @@ const PlaylistDetail = () => {
   }
 
   const handlePlayTrack = (track: Track) => {
-    // Set the current track in Redux store
-    dispatch(setCurrentTrack(track));
-    dispatch(setPlaying(true));
-    dispatch(setShowMiniPlayer(true));
-    setCurrentPlaying(track.id);
+     if (currentTrack?.id === track.id) {
+       dispatch(setShowMiniPlayer(true));
+      dispatch(setPlaying(!isPlaying));
+    } else {
+      dispatch(setCurrentTrack(track));
+      dispatch(setPlaying(true));
+    }
   };
 
   const handleBack = () => {
@@ -436,7 +440,7 @@ const PlaylistDetail = () => {
                       onClick={() => handlePlayTrack(track)}
                       sx={{
                         color:
-                          currentPlaying === track.id
+                          currentTrack?.id === track.id && isPlaying
                             ? isDarkMode
                               ? "#00e5ff"
                               : "#1976d2"
@@ -448,10 +452,10 @@ const PlaylistDetail = () => {
                         },
                       }}
                     >
-                      {currentPlaying === track.id ? (
+                      {currentTrack?.id === track.id && isPlaying ? (
                         <Pause size={20} />
                       ) : (
-                        <Play size={20} />
+                        <Play size={20}  />
                       )}
                     </IconButton>
                     <IconButton

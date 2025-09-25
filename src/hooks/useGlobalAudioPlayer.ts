@@ -94,6 +94,13 @@ export const useGlobalAudioPlayer = () => {
       dispatch(setDuration(audio.duration));
       dispatch(setLoading(false));
       clearTimeout(loadingTimeout);
+      
+      // If we were supposed to be playing, start playing now that metadata is loaded
+      if (isPlaying) {
+        audio.play().catch((error) => {
+          console.error('Error playing audio after metadata loaded:', error);
+        });
+      }
     };
 
     const handleTimeUpdate = () => {
@@ -124,6 +131,13 @@ export const useGlobalAudioPlayer = () => {
       console.log('Audio can play');
       dispatch(setLoading(false));
       clearTimeout(loadingTimeout);
+      
+      // If we were supposed to be playing, start playing now that audio is ready
+      if (isPlaying) {
+        audio.play().catch((error) => {
+          console.error('Error playing audio after can play:', error);
+        });
+      }
     };
 
     const handleWaiting = () => {
@@ -180,7 +194,7 @@ export const useGlobalAudioPlayer = () => {
       audio.removeEventListener('stalled', handleStalled);
       audio.removeEventListener('suspend', handleSuspend);
     };
-  }, [currentTrack, currentTime, dispatch]);
+  }, [currentTrack, currentTime, dispatch, isPlaying]);
 
   return audioRef;
 };
