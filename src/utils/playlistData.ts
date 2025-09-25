@@ -97,7 +97,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       "A curated collection of machine learning podcasts and educational content",
     trackCount: 7,
     duration: "2h 18m",
-    thumbnail: "/assets/AIIMAGE.jpg",
+    thumbnail: "/assets/machine-learning.jpg",
     createdBy: "You",
     createdAt: "2024-09-25",
     tracks: [
@@ -109,7 +109,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
         duration: "12:34",
         listeners: "5.2K",
         date: "2024-05-10",
-        thumbnail: "/assets/AIIMAGE.jpg",
+        thumbnail: "/assets/machine-learning.jpg",
         category: "Machine Learning",
         audioUrl:
           "https://res.cloudinary.com/dgvoocfla/video/upload/v1758821057/Machine_Learning_Models_rcsgub.mp4",
@@ -135,7 +135,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
         duration: "20:32",
         listeners: "7.1K",
         date: "2024-05-20",
-        thumbnail: "/assets/AIIMAGE.jpg",
+        thumbnail: "/assets/machine-learning.jpg",
         category: "Machine Learning",
         audioUrl:
           "https://res.cloudinary.com/dgvoocfla/video/upload/v1758821060/Regression_ydmhig.mp4",
@@ -174,7 +174,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
         duration: "18:32",
         listeners: "4.1K",
         date: "2024-06-05",
-        thumbnail: "/assets/AIIMAGE.jpg",
+        thumbnail: "/assets/machine-learning.jpg",
         category: "Machine Learning",
         audioUrl:
           "https://res.cloudinary.com/dgvoocfla/video/upload/v1758821055/Clustering_zfdd3n.mp4",
@@ -200,7 +200,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
         duration: "17:01",
         listeners: "8.5K",
         date: "2024-06-15",
-        thumbnail: "/assets/AIIMAGE.jpg",
+        thumbnail: "/assets/machine-learning.jpg",
         category: "Machine Learning",
         audioUrl:
           "https://res.cloudinary.com/dgvoocfla/video/upload/v1758822269/%E0%A4%A8%E0%A5%8D%E0%A4%AF%E0%A5%82%E0%A4%B0%E0%A4%B2_%E0%A4%A8%E0%A5%87%E0%A4%9F%E0%A4%B5%E0%A4%B0%E0%A5%8D%E0%A4%95_%E0%A4%B8%E0%A5%80%E0%A4%96%E0%A4%A4%E0%A5%87_%E0%A4%95%E0%A5%88%E0%A4%B8%E0%A5%87_%E0%A4%B9%E0%A5%88%E0%A4%82__%E0%A4%AC%E0%A5%88%E0%A4%95%E0%A4%AA%E0%A5%8D%E0%A4%B0%E0%A5%8B%E0%A4%AA%E0%A5%88%E0%A4%97%E0%A5%87%E0%A4%B6%E0%A4%A8__%E0%A4%B2%E0%A5%89%E0%A4%B8_%E0%A4%AB%E0%A4%82%E0%A4%95%E0%A5%8D%E0%A4%B6%E0%A4%A8_%E0%A4%94%E0%A4%B0_%E0%A4%97%E0%A5%8D%E0%A4%B0_teor5q.mp4",
