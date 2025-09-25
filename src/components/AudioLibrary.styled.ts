@@ -21,6 +21,9 @@ export const CardsWrapper = styled(Box)<{ view?: "grid" | "list" }>(({ theme, vi
     gridTemplateColumns: view === "grid" ? "1fr" : undefined,
     gap: theme.spacing(view === "list" ? 1 : 2),
   },
+   "& .MuiPaper-root": {
+     boxShadow: 'none',
+  },
 }));
 
 export const StyledCard = styled(Card)<{ view?: "grid" | "list" }>(({ theme, view = "grid" }) => ({
@@ -31,8 +34,13 @@ export const StyledCard = styled(Card)<{ view?: "grid" | "list" }>(({ theme, vie
   flexDirection: view === "list" ? "row" : "column",
   width: view === "list" ? "100%" : undefined,
   justifyContent: "space-between",
-  background: "linear-gradient(135deg, rgba(0,229,255,0.05), rgba(255,152,0,0.05))",
+  background: theme.palette.mode === 'dark'
+    ? "linear-gradient(135deg, rgba(0,229,255,0.05), rgba(255,152,0,0.05))"
+    : "",
   cursor: "pointer",
+  "& .MuiPaper-root": {
+     boxShadow: 'none',
+  },
   [theme.breakpoints.down("sm")]: {
     flexDirection: "column",
   },
@@ -43,7 +51,9 @@ export const AudioContainer = styled(Box)<{ view?: "grid" | "list" }>(({ theme, 
   width: view === "list" ? 200 : "100%",
   height: view === "list" ? 120 : 180,
   overflow: "hidden",
-  background: theme.palette.action.hover,
+  background: theme.palette.mode === 'dark'
+    ? theme.palette.action.hover
+    : 'rgba(0,0,0,0.03)',
   flexShrink: 0,
   [theme.breakpoints.down("sm")]: {
     width: view === "list" ? 120 : "100%",
@@ -51,13 +61,15 @@ export const AudioContainer = styled(Box)<{ view?: "grid" | "list" }>(({ theme, 
   },
 }));
 
-export const OverlayGradient = styled(Box)(() => ({
+export const OverlayGradient = styled(Box)(({ theme }) => ({
   position: 'absolute',
   left: 0,
   right: 0,
   bottom: 0,
   height: '40%',
-  background: 'linear-gradient(180deg, rgba(0,229,255,0) 0%, rgba(0,229,255,0.2) 100%)',
+  background: theme.palette.mode === 'dark'
+    ? 'linear-gradient(180deg, rgba(0,229,255,0) 0%, rgba(0,229,255,0.2) 100%)'
+    : 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 100%)',
   zIndex: 2,
 }));
 

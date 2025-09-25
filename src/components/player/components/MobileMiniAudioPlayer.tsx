@@ -3,6 +3,7 @@ import { Box, IconButton, Typography, Avatar } from "@mui/material";
 import { Play, Pause, SkipBack, SkipForward, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+import { useThemeContext } from "../../../hooks/useThemeContext";
 import {
   setPlaying,
   setCurrentTime,
@@ -12,6 +13,7 @@ import {
 const MobileMiniAudioPlayer: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { isDarkMode } = useThemeContext();
   const { currentTrack, isPlaying, currentTime, duration, showMiniPlayer } =
     useAppSelector((state) => state.audio);
 
@@ -46,12 +48,15 @@ const MobileMiniAudioPlayer: React.FC = () => {
         left: 0,
         right: 0,
         width: "100%",
-        height: 80,
-        background:
-          "linear-gradient(135deg, rgb(26, 26, 26) 0%, rgba(102, 126, 234, 0.03) 100%)",
+        height: 90,
+        background: isDarkMode
+          ? "linear-gradient(135deg, rgb(26, 26, 26) 0%, rgba(102, 126, 234, 0.03) 100%)"
+          : "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(102, 126, 234, 0.08) 50%, rgba(255, 107, 107, 0.05) 100%)",
         backdropFilter: "blur(24px)",
-        borderTop: "1px solid rgba(255, 255, 255, 0.15)",
-        boxShadow: "0 -4px 20px rgba(0, 0, 0, 0.3)",
+        borderTop: `1px solid ${isDarkMode ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.12)"}`,
+        boxShadow: isDarkMode
+          ? "0 -4px 20px rgba(0, 0, 0, 0.3)"
+          : "0 -4px 20px rgba(0, 0, 0, 0.1)",
         display: "flex",
         alignItems: "center",
         padding: "12px 16px",
@@ -67,15 +72,15 @@ const MobileMiniAudioPlayer: React.FC = () => {
         }}
         sx={{
           position: "absolute",
-          top: 8,
+          top: 6,
           right: 8,
-          color: "rgba(255, 255, 255, 0.7)",
+          color: isDarkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",
           borderRadius: "50%",
           padding: "4px",
           transition: "all 0.2s ease",
           "&:hover": {
-            color: "white",
-            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            color: isDarkMode ? "white" : "black",
+            backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
           },
         }}
       >
@@ -101,8 +106,8 @@ const MobileMiniAudioPlayer: React.FC = () => {
             width: 56,
             height: 56,
             borderRadius: "8px",
-            border: "2px solid rgba(255, 255, 255, 0.2)",
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+            border: `2px solid ${isDarkMode ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.12)"}`,
+            boxShadow: isDarkMode ? "0 4px 12px rgba(0, 0, 0, 0.2)" : "0 4px 12px rgba(0, 0, 0, 0.1)",
             mr: 2,
           }}
         />
@@ -111,7 +116,7 @@ const MobileMiniAudioPlayer: React.FC = () => {
           <Typography
             variant="body1"
             sx={{
-              color: "white",
+              color: isDarkMode ? "white" : "black",
               fontWeight: 600,
               fontSize: "12px",
               overflow: "hidden",
@@ -125,7 +130,7 @@ const MobileMiniAudioPlayer: React.FC = () => {
           <Typography
             variant="body2"
             sx={{
-              color: "rgba(255, 255, 255, 0.6)",
+              color: isDarkMode ? "rgba(255, 255, 255, 0.6)" : "rgba(0, 0, 0, 0.6)",
               fontSize: "12px",
               overflow: "hidden",
               textOverflow: "ellipsis",
@@ -142,13 +147,13 @@ const MobileMiniAudioPlayer: React.FC = () => {
         <IconButton
           onClick={handleSkipBackward}
           sx={{
-            color: "rgba(255, 255, 255, 0.8)",
+            color: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
             borderRadius: "50%",
             padding: "6px",
             transition: "all 0.2s ease",
             "&:hover": {
-              color: "white",
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              color: isDarkMode ? "white" : "black",
+              backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
               transform: "scale(1.1)",
             },
           }}
@@ -160,14 +165,20 @@ const MobileMiniAudioPlayer: React.FC = () => {
           onClick={handlePlayPause}
           sx={{
             color: "white",
-            backgroundColor: "linear-gradient(45deg, #ff6b6b, #4ecdc4)",
+            backgroundColor: isDarkMode
+              ? "linear-gradient(45deg, #ff6b6b, #4ecdc4)"
+              : "linear-gradient(45deg, #667eea, #764ba2)",
             borderRadius: "50%",
             padding: "10px",
-            boxShadow: "0 4px 20px rgba(255, 107, 107, 0.4)",
+            boxShadow: isDarkMode
+              ? "0 4px 20px rgba(255, 107, 107, 0.4)"
+              : "0 4px 20px rgba(102, 126, 234, 0.3)",
             transition: "all 0.3s ease",
             "&:hover": {
               transform: "scale(1.1)",
-              boxShadow: "0 6px 30px rgba(255, 107, 107, 0.6)",
+              boxShadow: isDarkMode
+                ? "0 6px 30px rgba(255, 107, 107, 0.6)"
+                : "0 6px 30px rgba(102, 126, 234, 0.4)",
             },
             "&:active": {
               transform: "scale(0.95)",
@@ -180,13 +191,13 @@ const MobileMiniAudioPlayer: React.FC = () => {
         <IconButton
           onClick={handleSkipForward}
           sx={{
-            color: "rgba(255, 255, 255, 0.8)",
+            color: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
             borderRadius: "50%",
             padding: "6px",
             transition: "all 0.2s ease",
             "&:hover": {
-              color: "white",
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              color: isDarkMode ? "white" : "black",
+              backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
               transform: "scale(1.1)",
             },
           }}

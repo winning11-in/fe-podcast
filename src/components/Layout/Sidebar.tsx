@@ -53,15 +53,15 @@ const StyledListItemButton = styled(ListItemButton, {
     paddingLeft: "10px",
     borderRadius: 10,
     transition: "background 0.2s, color 0.2s",
-    background: $active ? ($isDarkMode ? "rgba(0,229,255,0.1)" : "rgba(0,229,255,0.3)") : "inherit",
+    background: $active ? ($isDarkMode ? "rgba(0,229,255,0.1)" : "rgba(0,229,255,0.15)") : "inherit",
     color: $active ? ($isDarkMode ? "#00e5ff" : "#000") : $isDarkMode ? "#fff" : "#000",
 
     "&:hover": {
       background: $active
-        ? ($isDarkMode ? "rgba(0,229,255,0.15)" : "rgba(0,229,255,0.4)")
+        ? ($isDarkMode ? "rgba(0,229,255,0.15)" : "rgba(0,229,255,0.25)")
         : $isDarkMode
         ? "rgba(255,255,255,0.1)"
-        : "rgba(0,229,255,0.05)",
+        : "rgba(0,0,0,0.04)",
       color: $active ? ($isDarkMode ? "#00e5ff" : "#000") : $isDarkMode ? "#fff" : "#000",
     },
 
@@ -88,11 +88,11 @@ const ThemeToggleButton = styled(IconButton, {
     borderRadius: $collapsed ? "50%" : 12,
     background: $isDarkMode
       ? "rgba(0,229,255,0.1)"
-      : "rgba(255, 255, 255, 0.1)",
+      : "rgba(0,229,255,0.1)",
     border: `1px solid ${
-      $isDarkMode ? "rgba(0,229,255,0.3)" : "rgba(255, 255, 255, 0.2)"
+      $isDarkMode ? "rgba(0,229,255,0.3)" : "rgba(0,229,255,0.3)"
     }`,
-    color: "#00e5ff",
+    color: $isDarkMode ? "#00e5ff" : "#1976d2",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -119,14 +119,14 @@ const ThemeToggleButton = styled(IconButton, {
     "&:hover": {
       background: $isDarkMode
         ? "rgba(0,229,255,0.2)"
-        : "rgba(255, 255, 255, 0.2)",
+        : "rgba(0,229,255,0.2)",
       borderColor: $isDarkMode
         ? "rgba(0,229,255,0.5)"
-        : "rgba(255, 255, 255, 0.4)",
+        : "rgba(0,229,255,0.5)",
       transform: "translateY(-1px)",
       boxShadow: $isDarkMode
         ? "0 4px 12px rgba(0,229,255,0.2)"
-        : "0 4px 12px rgba(255, 255, 255, 0.1)",
+        : "0 4px 12px rgba(0,229,255,0.2)",
 
       "&::before": {
         opacity: 1,
@@ -162,13 +162,13 @@ const Sidebar: React.FC<SidebarProps> = ({
             boxSizing: "border-box",
             background: isDarkMode
               ? "linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)"
-              : "#f8f9fa",
-            color: isDarkMode ? "#fff" : "#333",
+              : "linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%)",
+            color: isDarkMode ? "#fff" : "#1a1a1a",
             padding: "0px 12px",
-            borderRight: isDarkMode ? "1px solid #333" : "1px solid #e0e0e0",
+            borderRight: isDarkMode ? "1px solid #333" : "1px solid #e1e5e9",
             boxShadow: isDarkMode
               ? "2px 0 8px rgba(0,0,0,0.3)"
-              : "2px 0 8px rgba(0,0,0,0.1)",
+              : "2px 0 8px rgba(0,0,0,0.08)",
           },
         }}
     >
@@ -187,7 +187,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             background: isDarkMode ? "linear-gradient(90deg,#00e5ff,#ff9800)" : "none",
             WebkitBackgroundClip: isDarkMode ? "text" : "initial",
             WebkitTextFillColor: isDarkMode ? "transparent" : "initial",
-            color: isDarkMode ? "transparent" : "#333",
+            color: isDarkMode ? "transparent" : "#1a1a1a",
             fontWeight: "bold"
           }}
         >
@@ -195,7 +195,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </Typography>
         <Box
           onClick={() => isMobile ? setDrawerOpen?.(false) : setCollapsed(!collapsed)}
-          sx={{ color: isDarkMode ? "#fff" : "#333", cursor: "pointer" }}
+          sx={{ color: isDarkMode ? "#fff" : "#666", cursor: "pointer" }}
         >
           {isMobile ? (
             <PanelLeftClose size={22} />
@@ -259,7 +259,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 sx={{
                   fontSize: "0.875rem",
                   fontWeight: 500,
-                  color: "#00e5ff",
+                  color: isDarkMode ? "#00e5ff" : "#1976d2",
                   textShadow: "0 1px 2px rgba(0,0,0,0.1)",
                 }}
               >

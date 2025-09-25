@@ -3,6 +3,7 @@ import { Box, IconButton, Typography, Avatar, Slider, useMediaQuery, useTheme } 
 import { Play, Pause, SkipBack, SkipForward, Maximize2, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../../store/hooks";
+import { useThemeContext } from "../../../hooks/useThemeContext";
 import {
   setPlaying,
   setCurrentTime,
@@ -15,6 +16,7 @@ const MiniAudioPlayer: React.FC = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { isDarkMode } = useThemeContext();
   const { currentTrack, isPlaying, currentTime, duration, showMiniPlayer } =
     useAppSelector((state) => state.audio);
 
@@ -55,13 +57,15 @@ const MiniAudioPlayer: React.FC = () => {
         bottom: 24,
         right: 24,
         width: 360,
-        background:
-          "linear-gradient(135deg, rgb(26, 26, 26) 0%, rgba(102, 126, 234, 0.03) 100%)",
+        background: isDarkMode
+          ? "linear-gradient(135deg, rgb(26, 26, 26) 0%, rgba(102, 126, 234, 0.03) 100%)"
+          : "linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(102, 126, 234, 0.08) 50%, rgba(255, 107, 107, 0.05) 100%)",
         backdropFilter: "blur(24px)",
         borderRadius: "20px",
-        border: "1px solid rgba(255, 255, 255, 0.15)",
-        boxShadow:
-          "0 25px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 255, 255, 0.1)",
+        border: `1px solid ${isDarkMode ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.12)"}`,
+        boxShadow: isDarkMode
+          ? "0 25px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 255, 255, 0.1)"
+          : "0 25px 80px rgba(0, 0, 0, 0.2), 0 0 40px rgba(0, 0, 0, 0.05)",
         display: "flex",
         flexDirection: "column",
         padding: "20px",
@@ -69,8 +73,9 @@ const MiniAudioPlayer: React.FC = () => {
         transition: "all 0.3s ease-in-out",
         "&:hover": {
           transform: "translateY(-2px)",
-          boxShadow:
-            "0 30px 100px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 255, 255, 0.15)",
+          boxShadow: isDarkMode
+            ? "0 30px 100px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 255, 255, 0.15)"
+            : "0 30px 100px rgba(0, 0, 0, 0.3), 0 0 50px rgba(0, 0, 0, 0.08)",
         },
       }}
     >
@@ -85,7 +90,7 @@ const MiniAudioPlayer: React.FC = () => {
         <Typography
           variant="caption"
           sx={{
-            color: "rgba(255, 255, 255, 0.8)",
+            color: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
             fontWeight: 600,
             fontSize: "12px",
           }}
@@ -99,13 +104,13 @@ const MiniAudioPlayer: React.FC = () => {
               dispatch(setShowMiniPlayer(false));
             }}
             sx={{
-              color: "rgba(255, 255, 255, 0.7)",
+              color: isDarkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",
               borderRadius: "50%",
               padding: "6px",
               transition: "all 0.2s ease",
               "&:hover": {
-                color: "white",
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                color: isDarkMode ? "white" : "black",
+                backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
               },
             }}
           >
@@ -117,13 +122,13 @@ const MiniAudioPlayer: React.FC = () => {
               dispatch(setShowMiniPlayer(false));
             }}
             sx={{
-              color: "rgba(255, 255, 255, 0.7)",
+              color: isDarkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",
               borderRadius: "50%",
               padding: "6px",
               transition: "all 0.2s ease",
               "&:hover": {
-                color: "white",
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                color: isDarkMode ? "white" : "black",
+                backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
               },
             }}
           >
@@ -140,8 +145,8 @@ const MiniAudioPlayer: React.FC = () => {
             width: 120,
             height: 120,
             borderRadius: "16px",
-            border: "3px solid rgba(255, 255, 255, 0.2)",
-            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
+            border: `3px solid ${isDarkMode ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.12)"}`,
+            boxShadow: isDarkMode ? "0 8px 32px rgba(0, 0, 0, 0.3)" : "0 8px 32px rgba(0, 0, 0, 0.1)",
             transition: "transform 0.3s ease",
             "&:hover": {
               transform: "scale(1.05)",
@@ -154,7 +159,7 @@ const MiniAudioPlayer: React.FC = () => {
         <Typography
           variant="body1"
           sx={{
-            color: "white",
+            color: isDarkMode ? "white" : "black",
             fontWeight: 600,
             fontSize: "16px",
             overflow: "hidden",
@@ -186,13 +191,13 @@ const MiniAudioPlayer: React.FC = () => {
           <IconButton
             onClick={handleSkipBackward}
             sx={{
-              color: "rgba(255, 255, 255, 0.8)",
+              color: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
               borderRadius: "50%",
               padding: "8px",
               transition: "all 0.2s ease",
               "&:hover": {
-                color: "white",
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                color: isDarkMode ? "white" : "black",
+                backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
                 transform: "scale(1.1)",
               },
             }}
@@ -203,14 +208,20 @@ const MiniAudioPlayer: React.FC = () => {
             onClick={handlePlayPause}
             sx={{
               color: "white",
-              backgroundColor: "linear-gradient(45deg, #ff6b6b, #4ecdc4)",
+              backgroundColor: isDarkMode
+                ? "linear-gradient(45deg, #ff6b6b, #4ecdc4)"
+                : "linear-gradient(45deg, #667eea, #764ba2)",
               borderRadius: "50%",
               padding: "12px",
-              boxShadow: "0 4px 20px rgba(255, 107, 107, 0.4)",
+              boxShadow: isDarkMode
+                ? "0 4px 20px rgba(255, 107, 107, 0.4)"
+                : "0 4px 20px rgba(102, 126, 234, 0.3)",
               transition: "all 0.3s ease",
               "&:hover": {
                 transform: "scale(1.1)",
-                boxShadow: "0 6px 30px rgba(255, 107, 107, 0.6)",
+                boxShadow: isDarkMode
+                  ? "0 6px 30px rgba(255, 107, 107, 0.6)"
+                  : "0 6px 30px rgba(102, 126, 234, 0.4)",
               },
               "&:active": {
                 transform: "scale(0.95)",
@@ -222,13 +233,13 @@ const MiniAudioPlayer: React.FC = () => {
           <IconButton
             onClick={handleSkipForward}
             sx={{
-              color: "rgba(255, 255, 255, 0.8)",
+              color: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
               borderRadius: "50%",
               padding: "8px",
               transition: "all 0.2s ease",
               "&:hover": {
-                color: "white",
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                color: isDarkMode ? "white" : "black",
+                backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)",
                 transform: "scale(1.1)",
               },
             }}
@@ -242,7 +253,7 @@ const MiniAudioPlayer: React.FC = () => {
         <Typography
           variant="caption"
           sx={{
-            color: "rgba(255, 255, 255, 0.8)",
+            color: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
             fontSize: "12px",
             fontFamily: "monospace",
           }}
@@ -257,24 +268,24 @@ const MiniAudioPlayer: React.FC = () => {
           }
           sx={{
             flex: 1,
-            color: "#fff",
+            color: isDarkMode ? "#fff" : "#000",
             height: 4,
             "& .MuiSlider-thumb": {
               width: 12,
               height: 12,
-              backgroundColor: "#fff",
-              border: "2px solid rgba(255, 255, 255, 0.3)",
-              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)",
+              backgroundColor: isDarkMode ? "#fff" : "#000",
+              border: `2px solid ${isDarkMode ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.3)"}`,
+              boxShadow: isDarkMode ? "0 2px 10px rgba(0, 0, 0, 0.2)" : "0 2px 10px rgba(0, 0, 0, 0.1)",
               "&:hover": {
-                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
+                boxShadow: isDarkMode ? "0 4px 20px rgba(0, 0, 0, 0.3)" : "0 4px 20px rgba(0, 0, 0, 0.2)",
               },
             },
             "& .MuiSlider-track": {
-              backgroundColor: "#fff",
+              backgroundColor: isDarkMode ? "#fff" : "#000",
               height: 4,
             },
             "& .MuiSlider-rail": {
-              backgroundColor: "rgba(255, 255, 255, 0.3)",
+              backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.3)",
               height: 4,
             },
           }}
@@ -282,7 +293,7 @@ const MiniAudioPlayer: React.FC = () => {
         <Typography
           variant="caption"
           sx={{
-            color: "rgba(255, 255, 255, 0.8)",
+            color: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)",
             fontSize: "12px",
             fontFamily: "monospace",
           }}

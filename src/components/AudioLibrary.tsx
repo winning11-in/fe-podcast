@@ -157,10 +157,13 @@ const AudioLibrary = () => {
           variant="h5"
           fontWeight="bold"
           sx={{
-            mb: 0.5,
-            background: "linear-gradient(90deg,#00e5ff,#ff9800)",
+            background: isDarkMode
+              ? "linear-gradient(90deg,#00e5ff,#ff9800)"
+              : "none",
             WebkitBackgroundClip: isDarkMode ? "text" : "initial",
             WebkitTextFillColor: isDarkMode ? "transparent" : "initial",
+            color: isDarkMode ? "transparent" : "#333",
+            fontWeight: "bold",
             [theme.breakpoints.down("sm")]: {
               fontSize: "1.5rem",
             },
@@ -285,7 +288,9 @@ const AudioLibrary = () => {
                 alignItems="start"
               >
                 <Box>
-                  <Typography variant="subtitle1" fontWeight={600}
+                  <Typography
+                    variant="subtitle1"
+                    fontWeight={600}
                     sx={{
                       [theme.breakpoints.down("sm")]: {
                         fontSize: "0.9rem",
@@ -298,7 +303,9 @@ const AudioLibrary = () => {
                   >
                     {track.title}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary"
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
                     sx={{
                       [theme.breakpoints.down("sm")]: {
                         fontSize: "0.75rem",
@@ -337,7 +344,9 @@ const AudioLibrary = () => {
               <ActionsRow>
                 <Box display="flex" alignItems="center" gap={0.5}>
                   <Clock size={16} />
-                  <Typography variant="body2" color="text.secondary"
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
                     sx={{
                       [theme.breakpoints.down("sm")]: {
                         fontSize: "0.75rem",
@@ -347,7 +356,9 @@ const AudioLibrary = () => {
                     {track.duration}
                   </Typography>
                 </Box>
-                <Typography color="#00c4d6" fontWeight={600}
+                <Typography
+                  color="#00c4d6"
+                  fontWeight={600}
                   sx={{
                     [theme.breakpoints.down("sm")]: {
                       fontSize: "0.75rem",
