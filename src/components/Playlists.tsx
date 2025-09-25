@@ -1,7 +1,7 @@
 import React from "react";
-import { Play, Clock, Grid, List, Heart, Music, Users } from "lucide-react";
+import { Play, Clock, Heart, Music, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
- 
+
 import {
   Box,
   Typography,
@@ -10,29 +10,16 @@ import {
   IconButton,
   Select,
   MenuItem,
-  ToggleButton,
-  ToggleButtonGroup,
   Chip,
- 
 } from "@mui/material";
 import { useThemeContext } from "../hooks/useThemeContext";
 import { SAMPLE_PLAYLISTS } from "../utils/playlistData";
- 
+
 const Playlists = () => {
   const navigate = useNavigate();
   const { isDarkMode } = useThemeContext();
-  
-  const [viewMode, setViewMode] = React.useState<"grid" | "list">("grid");
-  const [sortBy, setSortBy] = React.useState("recent");
 
-  const handleViewChange = (
-    _event: React.MouseEvent<HTMLElement>,
-    newView: "grid" | "list" | null
-  ) => {
-    if (newView !== null) {
-      setViewMode(newView);
-    }
-  };
+  const [sortBy, setSortBy] = React.useState("recent");
 
   const handlePlaylistClick = (playlistId: string) => {
     navigate(`/playlists/${playlistId}`);
@@ -42,7 +29,6 @@ const Playlists = () => {
     <Box
       sx={{
         minHeight: "100vh",
-       
       }}
     >
       {/* Header */}
@@ -93,32 +79,15 @@ const Playlists = () => {
             <MenuItem value="name">Name</MenuItem>
             <MenuItem value="tracks">Track Count</MenuItem>
           </Select>
-
-          <ToggleButtonGroup
-            value={viewMode}
-            exclusive
-            onChange={handleViewChange}
-            size="small"
-          >
-            <ToggleButton value="grid">
-              <Grid size={16} />
-            </ToggleButton>
-            <ToggleButton value="list">
-              <List size={16} />
-            </ToggleButton>
-          </ToggleButtonGroup>
         </Box>
       </Box>
 
       {/* Playlists Grid/List */}
       <Box
         sx={{
-          display: viewMode === "grid" ? "grid" : "flex",
-          flexDirection: viewMode === "list" ? "column" : "row",
-          gridTemplateColumns:
-            viewMode === "grid"
-              ? "repeat(auto-fill, minmax(320px, 1fr))"
-              : undefined,
+          display: "grid",
+          flexDirection: "column",
+          gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
           gap: 3,
         }}
       >
@@ -140,10 +109,10 @@ const Playlists = () => {
               cursor: "pointer",
               position: "relative",
               "&:hover": {
-                 boxShadow: isDarkMode
+                boxShadow: isDarkMode
                   ? "0 20px 40px rgba(0,229,255,0.15), 0 0 0 1px rgba(0,229,255,0.1)"
                   : "0 20px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(25,118,210,0.08)",
-               },
+              },
               "&::before": {
                 content: '""',
                 position: "absolute",
@@ -162,7 +131,7 @@ const Playlists = () => {
               },
             }}
           >
-            <Box sx={{ position: "relative", height: viewMode === "grid" ? "200px" : "140px" }}>
+            <Box sx={{ position: "relative", height: "200px" }}>
               <CardMedia
                 component="img"
                 height="100%"
@@ -180,7 +149,8 @@ const Playlists = () => {
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  background: "linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%)",
+                  background:
+                    "linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -255,7 +225,9 @@ const Playlists = () => {
               <Typography
                 variant="body2"
                 sx={{
-                  color: isDarkMode ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)",
+                  color: isDarkMode
+                    ? "rgba(255,255,255,0.7)"
+                    : "rgba(0,0,0,0.6)",
                   mb: 2,
                   display: "-webkit-box",
                   WebkitLineClamp: 2,
@@ -279,7 +251,9 @@ const Playlists = () => {
                   <Typography
                     variant="caption"
                     sx={{
-                      color: isDarkMode ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)",
+                      color: isDarkMode
+                        ? "rgba(255,255,255,0.5)"
+                        : "rgba(0,0,0,0.5)",
                       display: "flex",
                       alignItems: "center",
                       gap: 0.5,
@@ -292,7 +266,9 @@ const Playlists = () => {
                   <Typography
                     variant="caption"
                     sx={{
-                      color: isDarkMode ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)",
+                      color: isDarkMode
+                        ? "rgba(255,255,255,0.5)"
+                        : "rgba(0,0,0,0.5)",
                       display: "flex",
                       alignItems: "center",
                       gap: 0.5,
@@ -306,7 +282,14 @@ const Playlists = () => {
 
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   {playlist.isPublic && (
-                    <Users size={16} style={{ color: isDarkMode ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }} />
+                    <Users
+                      size={16}
+                      style={{
+                        color: isDarkMode
+                          ? "rgba(255,255,255,0.5)"
+                          : "rgba(0,0,0,0.5)",
+                      }}
+                    />
                   )}
                   <IconButton
                     size="small"
@@ -315,7 +298,9 @@ const Playlists = () => {
                       // Handle favorite toggle
                     }}
                     sx={{
-                      color: isDarkMode ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)",
+                      color: isDarkMode
+                        ? "rgba(255,255,255,0.5)"
+                        : "rgba(0,0,0,0.5)",
                       "&:hover": {
                         color: "#ff4081",
                       },
