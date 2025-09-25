@@ -140,12 +140,10 @@ const Playlists = () => {
               cursor: "pointer",
               position: "relative",
               "&:hover": {
-                transform: "translateY(-8px) scale(1.02)",
-                boxShadow: isDarkMode
+                 boxShadow: isDarkMode
                   ? "0 20px 40px rgba(0,229,255,0.15), 0 0 0 1px rgba(0,229,255,0.1)"
                   : "0 20px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(25,118,210,0.08)",
-                borderColor: isDarkMode ? "rgba(0,229,255,0.3)" : "rgba(25,118,210,0.2)",
-              },
+               },
               "&::before": {
                 content: '""',
                 position: "absolute",
