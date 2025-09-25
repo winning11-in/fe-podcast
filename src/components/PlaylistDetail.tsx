@@ -14,31 +14,25 @@ import {
   ListItemText,
   ListItemSecondaryAction,
 } from "@mui/material";
-import {
-  ArrowLeft,
-  Play,
-  Pause,
-  Heart,
-  MoreHorizontal,
-  Clock,
-  Music,
-  Users,
-  Share,
-} from "lucide-react";
+import { ArrowLeft, Play, Pause, Clock, Music, Users } from "lucide-react";
 import { useThemeContext } from "../hooks/useThemeContext";
 import { getPlaylistById, type Track } from "../utils/playlistData";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { setCurrentTrack, setPlaying, setShowMiniPlayer } from "../store/audioSlice";
+import {
+  setCurrentTrack,
+  setPlaying,
+  setShowMiniPlayer,
+} from "../store/audioSlice";
 
 const PlaylistDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { isDarkMode } = useThemeContext();
   const dispatch = useAppDispatch();
-  
+
   // Get audio state from Redux
-  const currentTrack = useAppSelector(state => state.audio.currentTrack);
-  const isPlaying = useAppSelector(state => state.audio.isPlaying);
+  const currentTrack = useAppSelector((state) => state.audio.currentTrack);
+  const isPlaying = useAppSelector((state) => state.audio.isPlaying);
 
   const playlist = id ? getPlaylistById(id) : null;
 
@@ -63,8 +57,8 @@ const PlaylistDetail = () => {
   }
 
   const handlePlayTrack = (track: Track) => {
-     if (currentTrack?.id === track.id) {
-       dispatch(setShowMiniPlayer(true));
+    if (currentTrack?.id === track.id) {
+      dispatch(setShowMiniPlayer(true));
       dispatch(setPlaying(!isPlaying));
     } else {
       dispatch(setCurrentTrack(track));
@@ -83,7 +77,7 @@ const PlaylistDetail = () => {
       }}
     >
       {/* Header with back button */}
-      <Box sx={{ mb: 4 }}>
+      <Box sx={{ mb: { xs: 2, md: 4 }, px: { xs: 2, md: 0 } }}>
         <Button
           startIcon={<ArrowLeft size={20} />}
           onClick={handleBack}
@@ -105,23 +99,25 @@ const PlaylistDetail = () => {
       <Box
         sx={{
           display: "flex",
-          gap: 4,
-          mb: 4,
-          flexWrap: "wrap",
-          alignItems: "flex-start",
+          gap: { xs: 2, md: 4 },
+          mb: { xs: 2, md: 4 },
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: { xs: "center", md: "flex-start" },
+          textAlign: { xs: "center", md: "left" },
         }}
       >
         {/* Playlist Cover */}
         <Box
           sx={{
-            width: 300,
-            height: 300,
+            width: { xs: 250, md: 300 },
+            height: { xs: 250, md: 300 },
             borderRadius: 3,
             overflow: "hidden",
             boxShadow: isDarkMode
               ? "0 20px 40px rgba(0,229,255,0.2)"
               : "0 20px 40px rgba(0,0,0,0.15)",
             position: "relative",
+            mb: { xs: 2, md: 0 },
           }}
         >
           <CardMedia
@@ -172,12 +168,19 @@ const PlaylistDetail = () => {
         </Box>
 
         {/* Playlist Info */}
-        <Box sx={{ flex: 1, minWidth: 300 }}>
+        <Box
+          sx={{
+            flex: 1,
+            minWidth: { xs: "100%", md: 300 },
+            maxWidth: { xs: "100%", md: "none" },
+          }}
+        >
           <Typography
             variant="h3"
             sx={{
               fontWeight: "bold",
               mb: 2,
+              fontSize: { xs: "2rem", md: "3rem" },
               background: isDarkMode
                 ? "linear-gradient(90deg, #00e5ff, #ff9800)"
                 : "linear-gradient(90deg, #1976d2, #42a5f5)",
@@ -195,14 +198,22 @@ const PlaylistDetail = () => {
               color: isDarkMode ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)",
               mb: 3,
               lineHeight: 1.6,
-              fontSize: "1.1rem",
+              fontSize: { xs: "1rem", md: "1.1rem" },
             }}
           >
             {playlist.description}
           </Typography>
 
           {/* Stats */}
-          <Box sx={{ display: "flex", gap: 3, mb: 3, flexWrap: "wrap" }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: { xs: 2, md: 3 },
+              mb: 3,
+              flexWrap: "wrap",
+              justifyContent: { xs: "center", md: "flex-start" },
+            }}
+          >
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
               <Music
                 size={18}
@@ -242,7 +253,15 @@ const PlaylistDetail = () => {
           </Box>
 
           {/* Tags */}
-          <Box sx={{ display: "flex", gap: 1, mb: 3, flexWrap: "wrap" }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+              mb: 3,
+              flexWrap: "wrap",
+              justifyContent: { xs: "center", md: "flex-start" },
+            }}
+          >
             {playlist.tags.map((tag) => (
               <Chip
                 key={tag}
@@ -261,82 +280,26 @@ const PlaylistDetail = () => {
           </Box>
 
           {/* Action Buttons */}
-          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
-            <Button
-              variant="contained"
-              startIcon={<Play size={20} />}
-              sx={{
-                background: isDarkMode
-                  ? "linear-gradient(90deg, #00e5ff, #ff9800)"
-                  : "linear-gradient(90deg, #1976d2, #42a5f5)",
-                color: "#fff",
-                px: 4,
-                py: 1.5,
-                borderRadius: 3,
-                fontWeight: "bold",
-                "&:hover": {
-                  transform: "translateY(-2px)",
-                  boxShadow: "0 8px 24px rgba(0,229,255,0.4)",
-                },
-                transition: "all 0.2s ease",
-              }}
-            >
-              Play All
-            </Button>
-            <Button
-              variant="outlined"
-              startIcon={<Heart size={20} />}
-              sx={{
-                borderColor: isDarkMode
-                  ? "rgba(0,229,255,0.5)"
-                  : "rgba(25,118,210,0.5)",
-                color: isDarkMode ? "#00e5ff" : "#1976d2",
-                px: 3,
-                py: 1.5,
-                borderRadius: 3,
-                "&:hover": {
-                  borderColor: isDarkMode ? "#00e5ff" : "#1976d2",
-                  background: isDarkMode
-                    ? "rgba(0,229,255,0.1)"
-                    : "rgba(25,118,210,0.1)",
-                },
-              }}
-            >
-              Like
-            </Button>
-            <Button
-              variant="outlined"
-              startIcon={<Share size={20} />}
-              sx={{
-                borderColor: isDarkMode
-                  ? "rgba(255,255,255,0.3)"
-                  : "rgba(0,0,0,0.3)",
-                color: isDarkMode ? "#fff" : "#000",
-                px: 3,
-                py: 1.5,
-                borderRadius: 3,
-                "&:hover": {
-                  borderColor: isDarkMode ? "#fff" : "#000",
-                  background: isDarkMode
-                    ? "rgba(255,255,255,0.1)"
-                    : "rgba(0,0,0,0.1)",
-                },
-              }}
-            >
-              Share
-            </Button>
-          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              flexWrap: "wrap",
+              justifyContent: { xs: "center", md: "flex-start" },
+            }}
+          ></Box>
         </Box>
       </Box>
 
       {/* Tracks List */}
-      <Box>
+      <Box sx={{ px: { xs: 1, md: 0 } }}>
         <Typography
           variant="h5"
           sx={{
             fontWeight: "bold",
             mb: 3,
             color: isDarkMode ? "#fff" : "#000",
+            fontSize: { xs: "1.5rem", md: "2rem" },
           }}
         >
           Tracks
@@ -352,6 +315,7 @@ const PlaylistDetail = () => {
               isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"
             }`,
             borderRadius: 3,
+            mx: { xs: -1, md: 0 },
           }}
         >
           <List sx={{ py: 0 }}>
@@ -372,6 +336,8 @@ const PlaylistDetail = () => {
                       ? "rgba(255,255,255,0.05)"
                       : "rgba(0,0,0,0.02)",
                   },
+                  px: { xs: 2, md: 3 },
+                  py: { xs: 1.5, md: 2 },
                 }}
               >
                 <ListItemAvatar>
@@ -379,9 +345,9 @@ const PlaylistDetail = () => {
                     variant="rounded"
                     src={track.thumbnail}
                     sx={{
-                      width: 50,
-                      height: 50,
-                      mr: 2,
+                      width: { xs: 40, md: 50 },
+                      height: { xs: 40, md: 50 },
+                      mr: { xs: 1.5, md: 2 },
                       border: `2px solid ${
                         isDarkMode ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.1)"
                       }`,
@@ -435,7 +401,13 @@ const PlaylistDetail = () => {
                 />
 
                 <ListItemSecondaryAction>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: { xs: 0.5, md: 1 },
+                    }}
+                  >
                     <IconButton
                       onClick={() => handlePlayTrack(track)}
                       sx={{
@@ -450,34 +422,14 @@ const PlaylistDetail = () => {
                         "&:hover": {
                           color: isDarkMode ? "#00e5ff" : "#1976d2",
                         },
+                        p: { xs: 0.5, md: 1 },
                       }}
                     >
                       {currentTrack?.id === track.id && isPlaying ? (
-                        <Pause size={20} />
+                        <Pause size={18} />
                       ) : (
-                        <Play size={20}  />
+                        <Play size={18} />
                       )}
-                    </IconButton>
-                    <IconButton
-                      sx={{
-                        color: isDarkMode
-                          ? "rgba(255,255,255,0.5)"
-                          : "rgba(0,0,0,0.5)",
-                        "&:hover": {
-                          color: "#ff4081",
-                        },
-                      }}
-                    >
-                      <Heart size={18} />
-                    </IconButton>
-                    <IconButton
-                      sx={{
-                        color: isDarkMode
-                          ? "rgba(255,255,255,0.5)"
-                          : "rgba(0,0,0,0.5)",
-                      }}
-                    >
-                      <MoreHorizontal size={18} />
                     </IconButton>
                   </Box>
                 </ListItemSecondaryAction>
