@@ -21,6 +21,7 @@ import {
   Video,
   Sun,
   Moon,
+  ListMusic,
 } from "lucide-react";
 
 import type { ListItemButtonProps } from "@mui/material/ListItemButton";
@@ -77,6 +78,7 @@ const NAV_ITEMS = [
   // { text: "Dashboard", icon: <LayoutList size={18} />, path: "/dashboard" },
   { text: "Audio Library", icon: <Music size={18} />, path: "/audio-library" },
   { text: "Video Library", icon: <Video size={18} />, path: "/video-library" },
+  { text: "Playlists", icon: <ListMusic size={18} />, path: "/playlists" },
 ];
 
 const ThemeToggleButton = styled(IconButton, {

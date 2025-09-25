@@ -7,6 +7,8 @@ import Dashboard from "./components/Dashboard";
 import { useState, useEffect } from "react";
 import AudioLibrary from "./components/AudioLibrary";
 import VideoLibrary from "./components/VideoLibrary";
+import Playlists from "./components/Playlists";
+import PlaylistDetail from "./components/PlaylistDetail";
 import AudioPlayer from "./components/player/AudioPlayer";
 import VideoPlayer from "./components/player/VideoPlayer";
 import MiniAudioPlayer from "./components/player/components/MiniAudioPlayer";
@@ -126,6 +128,8 @@ function App() {
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/audio-library" element={<AudioLibrary />} />
                   <Route path="/video-library" element={<VideoLibrary />} />
+                  <Route path="/playlists" element={<Playlists />} />
+                  <Route path="/playlists/:id" element={<PlaylistDetail />} />
                   <Route path="/audio-player/:id" element={<AudioPlayer />} />
                   <Route path="/video-player/:id" element={<VideoPlayer />} />
                 </Routes>
