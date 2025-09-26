@@ -11,6 +11,7 @@ import {
   Select,
   MenuItem,
   Chip,
+  useTheme,
 } from "@mui/material";
 import { useThemeContext } from "../hooks/useThemeContext";
 import { SAMPLE_PLAYLISTS } from "../utils/playlistData";
@@ -20,6 +21,7 @@ const Playlists = () => {
   const { isDarkMode } = useThemeContext();
 
   const [sortBy, setSortBy] = React.useState("recent");
+  const theme = useTheme();
 
   const handlePlaylistClick = (playlistId: string) => {
     navigate(`/playlists/${playlistId}`);
@@ -43,18 +45,21 @@ const Playlists = () => {
         }}
       >
         <Typography
-          variant="h4"
+          variant="h5"
           sx={{
-            fontWeight: "bold",
             background: isDarkMode
-              ? "linear-gradient(90deg, #00e5ff, #ff9800)"
-              : "linear-gradient(90deg, #1976d2, #42a5f5)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
+              ? "linear-gradient(90deg,#00e5ff,#ff9800)"
+              : "none",
+            WebkitBackgroundClip: isDarkMode ? "text" : "initial",
+            WebkitTextFillColor: isDarkMode ? "transparent" : "initial",
+            color: isDarkMode ? "transparent" : "#333",
+            fontWeight: "bold",
+            [theme.breakpoints.down("sm")]: {
+              fontSize: "1.5rem",
+            },
           }}
         >
-          My Playlists
+          {"Video Library"}
         </Typography>
 
         <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
