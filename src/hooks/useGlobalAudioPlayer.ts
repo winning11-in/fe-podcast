@@ -7,6 +7,7 @@ import {
   setLoading,
   setBuffered,
   resetAudioState,
+  setPendingPlay,
 } from '../store/audioSlice';
 
 export const useGlobalAudioPlayer = () => {
@@ -18,6 +19,7 @@ export const useGlobalAudioPlayer = () => {
     currentTime,
     volume,
     isMuted,
+    pendingPlay,
   } = useAppSelector((state) => state.audio);
 
   // Initialize audio element
@@ -96,7 +98,9 @@ export const useGlobalAudioPlayer = () => {
       clearTimeout(loadingTimeout);
       
       // If we were supposed to be playing, start playing now that metadata is loaded
-      if (isPlaying) {
+      if (isPlaying || pendingPlay) {
+        dispatch(setPlaying(true));
+        dispatch(setPendingPlay(false));
         audio.play().catch((error) => {
           console.error('Error playing audio after metadata loaded:', error);
         });
@@ -133,7 +137,9 @@ export const useGlobalAudioPlayer = () => {
       clearTimeout(loadingTimeout);
       
       // If we were supposed to be playing, start playing now that audio is ready
-      if (isPlaying) {
+      if (isPlaying || pendingPlay) {
+        dispatch(setPlaying(true));
+        dispatch(setPendingPlay(false));
         audio.play().catch((error) => {
           console.error('Error playing audio after can play:', error);
         });
@@ -194,7 +200,7 @@ export const useGlobalAudioPlayer = () => {
       audio.removeEventListener('stalled', handleStalled);
       audio.removeEventListener('suspend', handleSuspend);
     };
-  }, [currentTrack, currentTime, dispatch, isPlaying]);
+  }, [currentTrack, currentTime, dispatch, isPlaying, pendingPlay]);
 
   return audioRef;
 };

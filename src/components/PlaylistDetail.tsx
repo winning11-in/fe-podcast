@@ -22,6 +22,7 @@ import {
   setCurrentTrack,
   setPlaying,
   setShowMiniPlayer,
+  setPendingPlay,
 } from "../store/audioSlice";
 
 const PlaylistDetail = () => {
@@ -62,7 +63,8 @@ const PlaylistDetail = () => {
       dispatch(setPlaying(!isPlaying));
     } else {
       dispatch(setCurrentTrack(track));
-      dispatch(setPlaying(true));
+      dispatch(setPendingPlay(true));
+      dispatch(setShowMiniPlayer(true));
     }
   };
 
@@ -148,6 +150,7 @@ const PlaylistDetail = () => {
             }}
           >
             <IconButton
+              onClick={() => handlePlayTrack(playlist.tracks[0])}
               sx={{
                 background: "rgba(0,229,255,0.9)",
                 color: "#000",

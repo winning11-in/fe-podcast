@@ -15,6 +15,8 @@ export interface AudioPlayerState {
   buffered: number;
   // Mini player visibility
   showMiniPlayer: boolean;
+  // Pending play for when audio is ready
+  pendingPlay: boolean;
 }
 
 const initialState: AudioPlayerState = {
@@ -27,6 +29,7 @@ const initialState: AudioPlayerState = {
   isLoading: true,
   buffered: 0,
   showMiniPlayer: false,
+  pendingPlay: false,
 };
 
 const audioSlice = createSlice({
@@ -42,6 +45,7 @@ const audioSlice = createSlice({
         state.isPlaying = false;
         state.isLoading = true;
         state.buffered = 0;
+        state.pendingPlay = false;
       }
     },
     setPlaying: (state, action: PayloadAction<boolean>) => {
@@ -70,6 +74,9 @@ const audioSlice = createSlice({
     setShowMiniPlayer: (state, action: PayloadAction<boolean>) => {
       state.showMiniPlayer = action.payload;
     },
+    setPendingPlay: (state, action: PayloadAction<boolean>) => {
+      state.pendingPlay = action.payload;
+    },
     resetAudioState: (state) => {
       state.isPlaying = false;
       state.currentTime = 0;
@@ -90,6 +97,7 @@ export const {
   setLoading,
   setBuffered,
   setShowMiniPlayer,
+  setPendingPlay,
   resetAudioState,
 } = audioSlice.actions;
 
