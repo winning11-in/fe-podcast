@@ -59,7 +59,7 @@ const Playlists = () => {
             },
           }}
         >
-          {"Video Library"}
+          {"Playlist"}
         </Typography>
 
         <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
