@@ -103,7 +103,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
     tracks: [
       {
         id: "t7",
-        title: "Machine Learning Models",
+        title: "1. Machine Learning Models",
         author: "AI Podcast",
         description: "Introduction to machine learning models",
         duration: "12:34",
@@ -116,7 +116,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t8",
-        title: "Types of Machine Learning Models",
+        title: "2. Types of Machine Learning Models",
         author: "Data Science Weekly",
         description: "Understanding different types of machine learning models",
         duration: "14:13",
@@ -129,7 +129,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t9",
-        title: "Regression",
+        title: "3. Regression",
         author: "Tech Talks",
         description: "Deep dive into regression algorithms",
         duration: "20:32",
@@ -142,7 +142,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t10",
-        title: "Binary Classification",
+        title: "4. Binary Classification",
         author: "AI Insights",
         description: "Understanding binary classification techniques",
         duration: "17:14",
@@ -155,7 +155,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t11",
-        title: "Multiclass Classification",
+        title: "5. Multiclass Classification",
         author: "ML Masters",
         description: "Exploring multi-class classification methods",
         duration: "24:14",
@@ -168,7 +168,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t12",
-        title: "Clustering",
+        title: "6. Clustering",
         author: "Data Science Hub",
         description: "Introduction to clustering algorithms",
         duration: "18:32",
@@ -181,7 +181,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t13",
-        title: "Deep Learning",
+        title: "7. Deep Learning",
         author: "AI Research",
         description: "Exploring deep learning concepts and architectures",
         duration: "13:26",
@@ -194,7 +194,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t14",
-        title: "Artificial Intelligence",
+        title: "8. Artificial Intelligence",
         author: "Future Tech",
         description: "Comprehensive overview of artificial intelligence",
         duration: "17:01",
@@ -222,7 +222,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
     tracks: [
       {
         id: "t15",
-        title: "Vector Database",
+        title: "1. Vector Database",
         author: "AI Tech Podcast",
         description: "Understanding vector databases and their role in AI",
         duration: "20:12",
@@ -235,7 +235,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t16",
-        title: "How GPUs Power AI",
+        title: "2. How GPUs Power AI",
         author: "Tech Insights",
         description:
           "Exploring how GPUs accelerate artificial intelligence workloads",
@@ -249,7 +249,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t17",
-        title: "RAG",
+        title: "3. RAG",
         author: "AI Research Hub",
         description: "Retrieval-Augmented Generation explained",
         duration: "21:36",
@@ -262,7 +262,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t18",
-        title: "Vector Embeddings",
+        title: "4. Vector Embeddings",
         author: "Data Science Weekly",
         description: "Deep dive into vector embeddings and their applications",
         duration: "18:39",
