@@ -31,14 +31,18 @@ function App() {
    useGlobalAudioPlayer();
 
   const isPlayerPage = location.pathname.startsWith("/audio-player") || location.pathname.startsWith("/video-player");
+  const isAudioRelatedPage = location.pathname === "/audio-library" || location.pathname.startsWith("/playlists");
 
    useEffect(() => {
     if (isPlayerPage) {
       dispatch(setShowMiniPlayer(false));
-    } else if (currentTrack) {
+    } else if (currentTrack && isAudioRelatedPage) {
+      // Only show mini player on audio-related pages when there's a current track
       dispatch(setShowMiniPlayer(true));
+    } else {
+      dispatch(setShowMiniPlayer(false));
     }
-  }, [isPlayerPage, dispatch, currentTrack]);
+  }, [isPlayerPage, dispatch, currentTrack, isAudioRelatedPage]);
 
   const rootStyle: React.CSSProperties = {
     fontFamily: "'Roboto', sans-serif",

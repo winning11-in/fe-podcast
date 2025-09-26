@@ -8,6 +8,7 @@ import {
   setPlaying,
   setCurrentTime,
   setShowMiniPlayer,
+  resetAllAudioState,
 } from "../../../store/audioSlice";
 import { useDraggable } from "../../../hooks/useDraggable";
 import MobileMiniAudioPlayer from "./MobileMiniAudioPlayer";
@@ -128,8 +129,8 @@ const MiniAudioPlayer: React.FC = () => {
           </IconButton>
           <IconButton
             onClick={() => {
-              dispatch(setPlaying(false));
-              dispatch(setShowMiniPlayer(false));
+               localStorage.removeItem('miniPlayerPosition');
+              dispatch(resetAllAudioState());
             }}
             sx={{
               color: isDarkMode ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)",

@@ -7,7 +7,6 @@ import {
   setCurrentTrack,
   setPlaying,
   setCurrentTime,
-  setShowMiniPlayer,
   setMuted,
 } from "../../store/audioSlice";
 
@@ -136,7 +135,6 @@ const AudioPlayer: React.FC = () => {
   };
 
   const handleBack = () => {
-    dispatch(setShowMiniPlayer(true));
     navigate(-1);
   };
 

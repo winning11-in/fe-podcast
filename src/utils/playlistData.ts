@@ -103,7 +103,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
     tracks: [
       {
         id: "t7",
-        title: "1. Machine Learning Models",
+        title: "Machine Learning Models",
         author: "AI Podcast",
         description: "Introduction to machine learning models",
         duration: "12:34",
@@ -116,7 +116,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t8",
-        title: "2. Types of Machine Learning Models",
+        title: "Types of Machine Learning Models",
         author: "Data Science Weekly",
         description: "Understanding different types of machine learning models",
         duration: "14:13",
@@ -129,7 +129,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t9",
-        title: "3. Regression",
+        title: "Regression",
         author: "Tech Talks",
         description: "Deep dive into regression algorithms",
         duration: "20:32",
@@ -142,7 +142,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t10",
-        title: "4. Binary Classification",
+        title: "Binary Classification",
         author: "AI Insights",
         description: "Understanding binary classification techniques",
         duration: "17:14",
@@ -155,7 +155,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t11",
-        title: "5. Multiclass Classification",
+        title: "Multiclass Classification",
         author: "ML Masters",
         description: "Exploring multi-class classification methods",
         duration: "24:14",
@@ -168,7 +168,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t12",
-        title: "6. Clustering",
+        title: "Clustering",
         author: "Data Science Hub",
         description: "Introduction to clustering algorithms",
         duration: "18:32",
@@ -181,7 +181,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t13",
-        title: "7. Deep Learning",
+        title: "Deep Learning",
         author: "AI Research",
         description: "Exploring deep learning concepts and architectures",
         duration: "13:26",
@@ -194,7 +194,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t14",
-        title: "8. Artificial Intelligence",
+        title: "Artificial Intelligence",
         author: "Future Tech",
         description: "Comprehensive overview of artificial intelligence",
         duration: "17:01",
@@ -222,7 +222,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
     tracks: [
       {
         id: "t15",
-        title: "1. Vector Database",
+        title: "Vector Database",
         author: "AI Tech Podcast",
         description: "Understanding vector databases and their role in AI",
         duration: "20:12",
@@ -235,7 +235,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t16",
-        title: "2. How GPUs Power AI",
+        title: "How GPUs Power AI",
         author: "Tech Insights",
         description:
           "Exploring how GPUs accelerate artificial intelligence workloads",
@@ -249,7 +249,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t17",
-        title: "3. RAG",
+        title: "RAG",
         author: "AI Research Hub",
         description: "Retrieval-Augmented Generation explained",
         duration: "21:36",
@@ -262,7 +262,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t18",
-        title: "4. Vector Embeddings",
+        title: "Vector Embeddings",
         author: "Data Science Weekly",
         description: "Deep dive into vector embeddings and their applications",
         duration: "18:39",
@@ -291,7 +291,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
     tracks: [
       {
         id: "t19",
-        title: "1. Introduction to GANs",
+        title: "Introduction to GANs",
         author: "AI Research",
         description: "Understanding the basics of Generative Adversarial Networks",
         duration: "15:30",
@@ -303,7 +303,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t20",
-        title: "2. Generative Model",
+        title: "Generative Model",
         author: "Deep Learning Hub",
         description: "Exploring generative models and their fundamentals",
         duration: "18:45",
@@ -315,7 +315,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t21",
-        title: "3. GAN Structure",
+        title: "GAN Structure",
         author: "Tech Innovations",
         description: "Understanding the structure and components of GANs",
         duration: "22:10",
@@ -327,7 +327,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t22",
-        title: "4. Discriminator",
+        title: "Discriminator",
         author: "AI Masters",
         description: "Deep dive into the discriminator component of GANs",
         duration: "20:25",
@@ -339,7 +339,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t23",
-        title: "5. Generator",
+        title: "Generator",
         author: "Neural Networks Pro",
         description: "Understanding the generator component and its role",
         duration: "19:50",
@@ -351,7 +351,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t24",
-        title: "6. GAN Training",
+        title: "GAN Training",
         author: "ML Experts",
         description: "How to train Generative Adversarial Networks effectively",
         duration: "25:15",
@@ -363,7 +363,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t25",
-        title: "7. Loss Functions",
+        title: "Loss Functions",
         author: "Data Science Hub",
         description: "Understanding loss functions in GAN training",
         duration: "21:40",
@@ -375,7 +375,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t26",
-        title: "8. Common Problems",
+        title: "Common Problems",
         author: "AI Research Lab",
         description: "Common challenges and problems in GAN implementation",
         duration: "17:55",
@@ -387,7 +387,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t27",
-        title: "9. GAN Variations",
+        title: "GAN Variations",
         author: "Advanced AI",
         description: "Exploring different variations and types of GANs",
         duration: "23:30",
@@ -399,7 +399,7 @@ export const SAMPLE_PLAYLISTS: Playlist[] = [
       },
       {
         id: "t28",
-        title: "10. TF-GAN",
+        title: "TF-GAN",
         author: "TensorFlow Team",
         description: "Using TensorFlow's GAN implementation and tools",
         duration: "19:20",

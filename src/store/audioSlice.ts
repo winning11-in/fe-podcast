@@ -84,6 +84,19 @@ const audioSlice = createSlice({
       state.isLoading = true;
       state.buffered = 0;
     },
+    resetAllAudioState: (state) => {
+      // Reset all audio state to initial values
+      state.currentTrack = null;
+      state.isPlaying = false;
+      state.currentTime = 0;
+      state.duration = 0;
+      state.volume = 1;
+      state.isMuted = false;
+      state.isLoading = true;
+      state.buffered = 0;
+      state.showMiniPlayer = false;
+      state.pendingPlay = false;
+    },
   },
 });
 
@@ -99,6 +112,7 @@ export const {
   setShowMiniPlayer,
   setPendingPlay,
   resetAudioState,
+  resetAllAudioState,
 } = audioSlice.actions;
 
 export default audioSlice.reducer;
