@@ -9,6 +9,7 @@ import {
   setCurrentTime,
   setShowMiniPlayer,
 } from "../../../store/audioSlice";
+import { useDraggable } from "../../../hooks/useDraggable";
 import MobileMiniAudioPlayer from "./MobileMiniAudioPlayer";
 
 const MiniAudioPlayer: React.FC = () => {
@@ -20,11 +21,17 @@ const MiniAudioPlayer: React.FC = () => {
   const { currentTrack, isPlaying, currentTime, duration, showMiniPlayer } =
     useAppSelector((state) => state.audio);
 
+  const { position, isDragging, dragRef, handleMouseDown } = useDraggable({
+    initialX: 1041,
+    initialY: 525,
+    playerWidth: 360,
+    playerHeight: 200,
+  });
+
   if (!showMiniPlayer || !currentTrack) {
     return null;
   }
 
-  // Render mobile version for small screens
   if (isMobile) {
     return <MobileMiniAudioPlayer />;
   }
@@ -52,10 +59,12 @@ const MiniAudioPlayer: React.FC = () => {
 
   return (
     <Box
+      ref={dragRef}
+      onMouseDown={handleMouseDown}
       sx={{
         position: "fixed",
-        bottom: 24,
-        right: 24,
+        top: position.y,
+        left: position.x,
         width: 360,
         background: isDarkMode
           ? "linear-gradient(135deg, rgb(26, 26, 26) 0%, rgba(102, 126, 234, 0.03) 100%)"
@@ -70,9 +79,10 @@ const MiniAudioPlayer: React.FC = () => {
         flexDirection: "column",
         padding: "20px",
         zIndex: 1200,
-        transition: "all 0.3s ease-in-out",
+        cursor: isDragging ? "grabbing" : "grab",
+        transition: isDragging ? "none" : "all 0.3s ease-in-out",
         "&:hover": {
-          transform: "translateY(-2px)",
+          transform: isDragging ? "none" : "translateY(-2px)",
           boxShadow: isDarkMode
             ? "0 30px 100px rgba(0, 0, 0, 0.7), 0 0 50px rgba(255, 255, 255, 0.15)"
             : "0 30px 100px rgba(0, 0, 0, 0.3), 0 0 50px rgba(0, 0, 0, 0.08)",
