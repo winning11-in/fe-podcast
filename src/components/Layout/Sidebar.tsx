@@ -8,6 +8,7 @@ import {
   Box,
   ListItemButton,
   IconButton,
+  type ListItemButtonProps,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { NavLink } from "react-router-dom";
@@ -24,8 +25,8 @@ import {
   ListMusic,
 } from "lucide-react";
 
-import type { ListItemButtonProps } from "@mui/material/ListItemButton";
 import { useThemeContext } from "../../hooks/useThemeContext";
+import AISuggestions from "../AISuggestions";
 
 interface SidebarProps {
   collapsed?: boolean;
@@ -236,6 +237,10 @@ const Sidebar: React.FC<SidebarProps> = ({
           </ListItem>
         ))}
       </List>
+
+      {/* AI Suggestions */}
+      {!collapsed && (
+      <AISuggestions collapsed={collapsed} />)}
 
       {/* Theme Toggle - only show on desktop */}
       {!isMobile && (
