@@ -98,7 +98,7 @@ const AISuggestions: React.FC<AISuggestionsProps> = ({ collapsed = false }) => {
               "linear-gradient(135deg, #00e5ff 0%, #4ecdc4 50%, #f093fb 100%)",
           },
           transition: "all 0.3s ease",
-          mt: 5,
+          mt: 8,
         }}
       >
         <Box
@@ -149,7 +149,7 @@ const AISuggestions: React.FC<AISuggestionsProps> = ({ collapsed = false }) => {
           <Lottie
             animationData={audioSearchingAnimation}
             loop={true}
-            style={{ width: 80, height: 80 }}
+            style={{ width: 90, height: 90 }}
           />
         </Box>
       )}
