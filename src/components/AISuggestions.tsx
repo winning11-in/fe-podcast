@@ -25,6 +25,7 @@ const AISuggestions: React.FC<AISuggestionsProps> = ({ collapsed = false }) => {
   const [suggestions, setSuggestions] = useState<Track[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Add sparkle animation styles
   React.useEffect(() => {
@@ -43,12 +44,15 @@ const AISuggestions: React.FC<AISuggestionsProps> = ({ collapsed = false }) => {
 
   const handleGetSuggestions = async () => {
     setLoading(true);
+    setError(null);
     try {
       const suggestedTracks = await getTrackSuggestions();
       setSuggestions(suggestedTracks);
       setShowSuggestions(true);
     } catch (error) {
       console.error("Failed to get suggestions:", error);
+      setError("No suggestions from AI. Try again.");
+      setSuggestions([]);
     } finally {
       setLoading(false);
     }
@@ -57,6 +61,7 @@ const AISuggestions: React.FC<AISuggestionsProps> = ({ collapsed = false }) => {
   const handleButtonClick = () => {
     if (showSuggestions) {
       setShowSuggestions(false);
+      setError(null);
     } else {
       handleGetSuggestions();
     }
@@ -146,6 +151,21 @@ const AISuggestions: React.FC<AISuggestionsProps> = ({ collapsed = false }) => {
             loop={true}
             style={{ width: 80, height: 80 }}
           />
+        </Box>
+      )}
+
+      {/* Error Message */}
+      {error && !loading && (
+        <Box sx={{ mt: 2, textAlign: "center" }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: isDarkMode ? "#ff6b6b" : "#d32f2f",
+              fontSize: 14,
+            }}
+          >
+            {error}
+          </Typography>
         </Box>
       )}
 

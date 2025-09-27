@@ -22,8 +22,7 @@ export const getTrackSuggestions = async (): Promise<Track[]> => {
   const allTracks = getAllTracks();
 
   if (!API_KEY) {
-     const shuffled = [...allTracks].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 3);
+    throw new Error('Gemini API key not available. Unable to generate AI suggestions.');
   }
 
   try {
@@ -77,7 +76,6 @@ Return only the JSON array, no other text.`;
     return suggestions.slice(0, 3);
   } catch (error) {
     console.error('Error getting AI suggestions with gemini-1.5-flash:', error);
-     const shuffled = [...allTracks].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 3);
+    throw new Error('Failed to generate AI suggestions. Please try again.');
   }
 };
